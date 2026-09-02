@@ -8,32 +8,33 @@ export function DeviceFrame({
   kind,
   ratio,
   children,
+  maxHeightVh = 68,
 }: {
   kind: DeviceKind;
   ratio: number;
   children: ReactNode;
+  maxHeightVh?: number;
 }) {
   const isHandheld = kind !== "desktop";
   const pad = isHandheld ? 10 : 14;
   const radius = isHandheld ? 26 : 8;
 
   return (
-    <div className="flex w-full items-center justify-center">
+    <div className="flex w-full justify-center">
       <div
-        className="relative max-h-[68vh] border border-edge-strong bg-bg-sunken"
+        className="relative w-full border border-edge-strong bg-bg-sunken"
         style={{
           padding: pad,
           borderRadius: radius,
           aspectRatio: String(ratio),
-          maxWidth: ratio >= 1 ? "100%" : "min(100%, 42vh)",
+          maxWidth: `min(100%, calc(${maxHeightVh}vh * ${ratio}))`,
           boxShadow: "0 30px 80px -40px rgba(0,0,0,0.8)",
         }}
       >
-        {kind === "desktop" ? (
-          <span className="absolute left-1/2 top-1 h-1 w-10 -translate-x-1/2 rounded-full bg-edge-strong" />
-        ) : (
-          <span className="absolute left-1/2 top-2.5 h-1.5 w-16 -translate-x-1/2 rounded-full bg-edge-strong" />
-        )}
+        <span
+          className="absolute left-1/2 -translate-x-1/2 rounded-full bg-edge-strong"
+          style={{ top: isHandheld ? 3 : 4, height: isHandheld ? 5 : 4, width: isHandheld ? 60 : 40 }}
+        />
         <div
           className="h-full w-full overflow-hidden"
           style={{ borderRadius: Math.max(2, radius - pad) }}
