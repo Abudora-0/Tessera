@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-label="Tessera, a generative wallpaper studio">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d0e14"/>
+      <stop offset="1" stop-color="#08080a"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e8b04b" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#e8b04b" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#8b7bff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="360" fill="url(#bg)"/>
+  <path d="M0 250 C 200 210, 360 300, 560 260 S 960 190, 1280 240 L 1280 360 L 0 360 Z" fill="url(#ribbon)"/>
+  <path d="M0 300 C 240 270, 420 340, 640 300 S 1040 250, 1280 290 L 1280 360 L 0 360 Z" fill="#8b7bff" fill-opacity="0.12"/>
+
+  <g transform="translate(96 118)">
+    <polygon points="0,0 52,0 0,52" fill="#e8b04b"/>
+    <polygon points="60,0 60,52 112,0" fill="#8b7bff"/>
+    <polygon points="0,60 52,112 0,112" fill="#f3f1ec"/>
+    <polygon points="60,60 112,60 112,112" fill="#e8b04b"/>
+  </g>
+
+  <text x="240" y="170" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="64" font-weight="600" fill="#f3f1ec" letter-spacing="-1.5">Tessera</text>
+  <text x="242" y="212" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="19" fill="#b7b4ad" letter-spacing="1">A generative wallpaper studio. Every piece is drawn from a seed.</text>
+
+  <g transform="translate(242 244)" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#6f6d67">
+    <rect x="0" y="0" width="132" height="26" fill="none" stroke="#2a2a30"/>
+    <text x="14" y="17">8 families</text>
+    <rect x="144" y="0" width="128" height="26" fill="none" stroke="#2a2a30"/>
+    <text x="158" y="17">8 palettes</text>
+    <rect x="284" y="0" width="188" height="26" fill="none" stroke="#2a2a30"/>
+    <text x="298" y="17">exports up to 8K</text>
+  </g>
+</svg>
