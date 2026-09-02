@@ -498,6 +498,240 @@ const bauhaus: Generator = {
   },
 };
 
+/* -------------------------------------------------------------- Halftone */
+
+const halftone: Generator = {
+  id: "halftone",
+  name: "Halftone",
+  blurb: "A print screen of dots swelling across a gradient",
+  tags: ["print", "retro", "pattern", "graphic"],
+  draw({ ctx, width, height, palette, rng, params }: DrawContext) {
+    fillBackground(ctx, width, height, palette.colors[0]);
+    ctx.fillStyle = verticalGradient(ctx, height, [palette.colors[1], palette.colors[0]]);
+    ctx.fillRect(0, 0, width, height);
+
+    const scale = scaleFor(width, height);
+    const noise = createNoise2D(rng.next);
+    const spacing = lerp(52, 20, params.detail) * scale;
+    const maxR = spacing * lerp(0.42, 0.72, params.density);
+    const angle = rng.range(-0.35, 0.35);
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    const freq = lerp(0.0009, 0.0026, params.detail);
+    const inkLight = palette.colors[palette.colors.length - 1];
+    const inkAccent = palette.accent;
+    const diag = Math.hypot(width, height);
+
+    for (let gy = -diag; gy < diag; gy += spacing) {
+      for (let gx = -diag; gx < diag; gx += spacing) {
+        const x = width / 2 + gx * cos - gy * sin;
+        const y = height / 2 + gx * sin + gy * cos;
+        if (x < -spacing || x > width + spacing || y < -spacing || y > height + spacing) continue;
+        const rd = Math.hypot(x - width * 0.5, y - height * 0.5) / diag;
+        let v = (noise(x * freq, y * freq) + 1) / 2;
+        v = Math.min(1, Math.max(0, v * lerp(0.8, 1.6, params.contrast) - rd * 0.55 + 0.25));
+        const r = v * maxR;
+        if (r < 0.5) continue;
+        ctx.fillStyle = rgbaFromHex(v > 0.62 ? inkAccent : inkLight, lerp(0.55, 0.95, params.contrast));
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    applyGrain(ctx, width, height, rng, params.grain * 0.6);
+    applyVignette(ctx, width, height, lerp(0.05, 0.3, params.contrast));
+  },
+};
+
+/* -------------------------------------------------------------- Terrazzo */
+
+const terrazzo: Generator = {
+  id: "terrazzo",
+  name: "Terrazzo",
+  blurb: "Scattered stone chips set in a pale floor",
+  tags: ["scatter", "playful", "pattern", "organic"],
+  draw({ ctx, width, height, palette, rng, params }: DrawContext) {
+    const base = mixHex(palette.colors[palette.colors.length - 1], palette.colors[1], 0.12);
+    fillBackground(ctx, width, height, base);
+
+    const scale = scaleFor(width, height);
+    const chips = Math.round(lerp(150, 520, params.density) * scale);
+    const chipColors = palette.colors.slice(1, palette.colors.length - 1);
+    const outline = params.detail > 0.35;
+
+    for (let i = 0; i < chips; i += 1) {
+      const x = rng.next() * width;
+      const y = rng.next() * height;
+      const size = lerp(9, 44, params.detail) * scale * (0.4 + rng.next() * rng.next() * 2);
+      const sides = rng.int(3, 6);
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rng.range(0, Math.PI * 2));
+      ctx.scale(1, rng.range(0.6, 1));
+      ctx.beginPath();
+      for (let s = 0; s < sides; s += 1) {
+        const a = (s / sides) * Math.PI * 2;
+        const rr = size * rng.range(0.7, 1.15);
+        const px = Math.cos(a) * rr;
+        const py = Math.sin(a) * rr;
+        if (s === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.globalAlpha = lerp(0.7, 1, params.contrast);
+      ctx.fillStyle = chipColors[rng.int(0, chipColors.length - 1)];
+      ctx.fill();
+      if (outline) {
+        ctx.globalAlpha = 0.22;
+        ctx.lineWidth = scale;
+        ctx.strokeStyle = base;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+
+    radialGlow(ctx, width * 0.5, height * 0.3, Math.max(width, height) * 0.7, palette.accent, 0.08);
+    applyGrain(ctx, width, height, rng, params.grain);
+    applyVignette(ctx, width, height, lerp(0.04, 0.22, params.contrast));
+  },
+};
+
+/* ---------------------------------------------------------------- Ripple */
+
+const ripple: Generator = {
+  id: "ripple",
+  name: "Ripple",
+  blurb: "Overlapping rings spreading from points on still water",
+  tags: ["concentric", "calm", "hypnotic", "lines"],
+  draw({ ctx, width, height, palette, rng, params }: DrawContext) {
+    fillBackground(ctx, width, height, palette.background);
+    ctx.fillStyle = verticalGradient(ctx, height, [palette.colors[0], palette.colors[1]]);
+    ctx.fillRect(0, 0, width, height);
+
+    const scale = scaleFor(width, height);
+    const noise = createNoise2D(rng.next);
+    const sources = Math.round(lerp(2, 5, params.detail));
+    const spacing = lerp(48, 17, params.density) * scale;
+    const maxRadius = Math.hypot(width, height);
+    const wobble = lerp(0, 28, params.turbulence) * scale;
+
+    ctx.globalCompositeOperation = "lighter";
+    ctx.lineWidth = lerp(1, 2.4, params.density) * scale;
+    for (let s = 0; s < sources; s += 1) {
+      const ox = rng.range(width * 0.1, width * 0.9);
+      const oy = rng.range(height * 0.1, height * 0.9);
+      const color = palette.colors[2 + rng.int(0, palette.colors.length - 3)];
+      const phase = rng.range(0, 10);
+      for (let r = spacing; r < maxRadius; r += spacing) {
+        const alpha = lerp(0.05, 0.16, params.contrast) * (1 - r / maxRadius);
+        if (alpha <= 0.002) continue;
+        ctx.strokeStyle = rgbaFromHex(color, alpha);
+        ctx.beginPath();
+        const steps = 96;
+        for (let i = 0; i <= steps; i += 1) {
+          const a = (i / steps) * Math.PI * 2;
+          const wob =
+            wobble * noise(Math.cos(a) * 2 + phase, Math.sin(a) * 2 + r * 0.0015);
+          const rr = r + wob;
+          const px = ox + Math.cos(a) * rr;
+          const py = oy + Math.sin(a) * rr;
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+    ctx.globalCompositeOperation = "source-over";
+
+    radialGlow(ctx, width * 0.5, height * 0.5, maxRadius * 0.5, palette.accent, 0.1);
+    applyGrain(ctx, width, height, rng, params.grain);
+    applyVignette(ctx, width, height, lerp(0.12, 0.4, params.contrast));
+  },
+};
+
+/* ---------------------------------------------------------------- Marble */
+
+const marble: Generator = {
+  id: "marble",
+  name: "Marble",
+  blurb: "Mineral veins pulled through a slab of stone",
+  tags: ["organic", "painterly", "veined", "atmospheric"],
+  draw({ ctx, width, height, palette, rng, params }: DrawContext) {
+    const base = mixHex(palette.colors[1], palette.colors[3], 0.4);
+    fillBackground(ctx, width, height, base);
+    ctx.fillStyle = verticalGradient(ctx, height, [
+      rgbaFromHex(palette.colors[0], 0.5),
+      rgbaFromHex(palette.colors[3], 0.4),
+    ]);
+    ctx.fillRect(0, 0, width, height);
+
+    const scale = scaleFor(width, height);
+    const warp = createNoise2D(rng.next);
+    const warpX = createNoise2D(rng.next);
+    const grit = createNoise2D(rng.next);
+    const veins = Math.round(lerp(90, 260, params.density));
+    const warpAmount = lerp(160, 620, params.turbulence) * scale;
+    const octaves = Math.round(lerp(2, 5, params.detail));
+    const veinTint = palette.colors[palette.colors.length - 1];
+    const fissureTint = palette.colors[0];
+
+    const drawVein = (baseY: number, seedRow: number, colorStop: string, alpha: number, weight: number) => {
+      ctx.strokeStyle = rgbaFromHex(colorStop, alpha);
+      ctx.lineWidth = weight;
+      ctx.beginPath();
+      for (let x = -20; x <= width + 20; x += 12) {
+        let amp = warpAmount;
+        let freq = 0.0006;
+        let y = baseY;
+        let sx = x;
+        for (let o = 0; o < octaves; o += 1) {
+          sx += warpX(x * freq + seedRow, baseY * freq) * amp * 0.4;
+          y += warp(sx * freq, baseY * freq + seedRow * 0.05) * amp;
+          amp *= 0.5;
+          freq *= 2.15;
+        }
+        y += grit(x * 0.012, seedRow) * 7 * scale;
+        if (x === -20) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    };
+
+    ctx.globalCompositeOperation = "screen";
+    for (let v = 0; v < veins; v += 1) {
+      const t = v / veins;
+      const baseY = lerp(-height * 0.2, height * 1.2, t);
+      drawVein(
+        baseY,
+        v,
+        rng.bool(0.7) ? veinTint : palette.colors[3 + rng.int(0, palette.colors.length - 4)],
+        lerp(0.03, 0.12, params.contrast),
+        lerp(0.6, 2.6, params.detail) * scale * (0.5 + rng.next()),
+      );
+    }
+    ctx.globalCompositeOperation = "source-over";
+
+    // a handful of bold fissures for depth
+    const fissures = Math.round(lerp(3, 9, params.detail));
+    for (let f = 0; f < fissures; f += 1) {
+      drawVein(
+        rng.range(0, height),
+        1000 + f * 13,
+        fissureTint,
+        lerp(0.12, 0.3, params.contrast),
+        lerp(1.4, 3.6, params.detail) * scale,
+      );
+    }
+
+    radialGlow(ctx, width * 0.3, height * 0.25, Math.max(width, height) * 0.7, palette.accent, 0.1);
+    applyGrain(ctx, width, height, rng, params.grain);
+    applyVignette(ctx, width, height, lerp(0.08, 0.3, params.contrast));
+  },
+};
+
 export const GENERATORS: Generator[] = [
   aurora,
   mesh,
@@ -507,6 +741,10 @@ export const GENERATORS: Generator[] = [
   orbital,
   waveform,
   bauhaus,
+  halftone,
+  terrazzo,
+  ripple,
+  marble,
 ];
 
 export const GENERATOR_MAP: Record<string, Generator> = Object.fromEntries(

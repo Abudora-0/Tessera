@@ -34,7 +34,7 @@ export default function OpengraphImage() {
             Wallpapers grown from a single seed.
           </div>
           <div style={{ color: "#b7b4ad", fontSize: 28, maxWidth: 820 }}>
-            Eight families, eight palettes, exported pixel perfect for any screen.
+            Twelve families, eight palettes, exported pixel perfect for any screen.
           </div>
         </div>
 

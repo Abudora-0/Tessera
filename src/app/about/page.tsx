@@ -10,7 +10,7 @@ import { DEFAULT_PARAMS } from "@/lib/generators/shared";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "How Tessera works: a seeded drawing engine with eight families, eight palettes and a canvas exporter that renders at any resolution.",
+    "How Tessera works: a seeded drawing engine with twelve families, eight palettes and a canvas exporter that renders at any resolution.",
 };
 
 const STACK = [
@@ -49,7 +49,7 @@ export default function AboutPage() {
           {[
             { label: "Families", value: GENERATORS.length },
             { label: "Palettes", value: PALETTES.length },
-            { label: "Seeded starts", value: 639936, suffix: "+" },
+            { label: "Seeded starts", value: 959904, suffix: "+" },
           ].map((stat) => (
             <div key={stat.label}>
               <p className="font-display text-3xl text-ink">

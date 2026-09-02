@@ -88,10 +88,16 @@ export function getPalette(id: string): Palette {
   return PALETTE_MAP[id] ?? PALETTES[0];
 }
 
-/** Parse "#rrggbb" into an { r, g, b } triple of 0 to 255 integers. */
-export function hexToRgb(hex: string): { r: number; g: number; b: number } {
-  const clean = hex.replace("#", "").trim();
-  const value = parseInt(
+/** Parse "#rrggbb", "#rgb" or "rgb(r, g, b)" into an { r, g, b } triple. */
+export function hexToRgb(input: string): { r: number; g: number; b: number } {
+  const value = input.trim();
+  const rgbMatch = value.match(/^rgba?\(([^)]+)\)/i);
+  if (rgbMatch) {
+    const parts = rgbMatch[1].split(",").map((part) => parseInt(part, 10) || 0);
+    return { r: parts[0] ?? 0, g: parts[1] ?? 0, b: parts[2] ?? 0 };
+  }
+  const clean = value.replace("#", "");
+  const packed = parseInt(
     clean.length === 3
       ? clean
           .split("")
@@ -100,7 +106,7 @@ export function hexToRgb(hex: string): { r: number; g: number; b: number } {
       : clean,
     16,
   );
-  return { r: (value >> 16) & 255, g: (value >> 8) & 255, b: value & 255 };
+  return { r: (packed >> 16) & 255, g: (packed >> 8) & 255, b: packed & 255 };
 }
 
 export function rgbaFromHex(hex: string, alpha: number): string {

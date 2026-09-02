@@ -69,6 +69,26 @@ const RAW: RawCollection[] = [
   { name: "Studio Grid", family: "bauhaus", palette: "mono", seed: 4747, tags: ["minimal", "graphic"] },
   { name: "Playroom", family: "bauhaus", palette: "bloom", seed: 6363, params: { contrast: 0.7 }, tags: ["playful", "bold"] },
   { name: "Cobalt Primer", family: "bauhaus", palette: "midnight", seed: 8080, params: { detail: 0.6 }, tags: ["modern", "graphic"] },
+
+  { name: "Press Check", family: "halftone", palette: "mono", seed: 1200, params: { detail: 0.6 }, tags: ["print", "minimal"], featured: true },
+  { name: "Comic Sunset", family: "halftone", palette: "sunset", seed: 4820, params: { density: 0.7, contrast: 0.7 }, tags: ["retro", "warm"] },
+  { name: "Cyan Screen", family: "halftone", palette: "ice", seed: 7150, tags: ["cool", "pattern"] },
+  { name: "Risograph", family: "halftone", palette: "bloom", seed: 3360, params: { density: 0.65 }, tags: ["playful", "print"] },
+
+  { name: "Lobby Floor", family: "terrazzo", palette: "bloom", seed: 2450, params: { density: 0.6 }, tags: ["playful", "pattern"], featured: true },
+  { name: "Confetti Hour", family: "terrazzo", palette: "neon", seed: 8890, params: { density: 0.8, contrast: 0.7 }, tags: ["vivid", "scatter"] },
+  { name: "Quarry", family: "terrazzo", palette: "mono", seed: 5010, params: { detail: 0.6 }, tags: ["minimal", "stone"] },
+  { name: "Orchard Chips", family: "terrazzo", palette: "verdant", seed: 6620, tags: ["nature", "scatter"] },
+
+  { name: "Still Pond", family: "ripple", palette: "ice", seed: 3140, params: { turbulence: 0.4 }, tags: ["calm", "cool"], featured: true },
+  { name: "Sonar", family: "ripple", palette: "midnight", seed: 7720, params: { density: 0.7 }, tags: ["night", "hypnotic"] },
+  { name: "Heat Bloom", family: "ripple", palette: "ember", seed: 4405, params: { turbulence: 0.7, contrast: 0.7 }, tags: ["warm", "energetic"] },
+  { name: "Rain Static", family: "ripple", palette: "neon", seed: 9130, params: { density: 0.8 }, tags: ["vivid", "concentric"] },
+
+  { name: "Carrara", family: "marble", palette: "mono", seed: 2210, params: { detail: 0.6 }, tags: ["painterly", "minimal"], featured: true },
+  { name: "Verde Alpi", family: "marble", palette: "verdant", seed: 6040, params: { turbulence: 0.6 }, tags: ["nature", "veined"] },
+  { name: "Portoro", family: "marble", palette: "midnight", seed: 8350, params: { contrast: 0.7 }, tags: ["night", "painterly"] },
+  { name: "Rosso Levanto", family: "marble", palette: "ember", seed: 5570, params: { density: 0.7 }, tags: ["warm", "veined"] },
 ];
 
 export const COLLECTIONS: Collection[] = RAW.map((raw) => {

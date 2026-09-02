@@ -27,7 +27,7 @@
 
   <g transform="translate(242 244)" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#6f6d67">
     <rect x="0" y="0" width="132" height="26" fill="none" stroke="#2a2a30"/>
-    <text x="14" y="17">8 families</text>
+    <text x="14" y="17">12 families</text>
     <rect x="144" y="0" width="128" height="26" fill="none" stroke="#2a2a30"/>
     <text x="158" y="17">8 palettes</text>
     <rect x="284" y="0" width="188" height="26" fill="none" stroke="#2a2a30"/>

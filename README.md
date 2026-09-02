@@ -50,8 +50,9 @@ backend involved.
 
 ## Features
 
-- **Eight drawing families.** Aurora, Mesh, Flow, Strata, Tessellate, Orbital,
-  Waveform and Bauhaus, each a different algorithm for filling a frame.
+- **Twelve drawing families.** Aurora, Mesh, Flow, Strata, Tessellate, Orbital,
+  Waveform, Bauhaus, Halftone, Terrazzo, Ripple and Marble, each a different
+  algorithm for filling a frame.
 - **Eight colour palettes.** From Midnight and Ice to Ember and Neon, tuned by hand.
 - **The Studio.** Live preview with themed controls for density, contrast, detail,
   turbulence and grain. Roll the seed until a piece stops you.
@@ -148,7 +149,7 @@ src/
     prng.ts            Seeded random and human friendly seed labels
     palettes.ts        Palette definitions and colour helpers
     devices.ts         Device and resolution presets
-    generators/        The eight drawing families and shared helpers
+    generators/        The twelve drawing families and shared helpers
     render.ts          Canvas orchestration, export, URL encoding
   data/
     collections.ts     Curated presets shown in the gallery

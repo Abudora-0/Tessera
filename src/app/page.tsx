@@ -14,7 +14,7 @@ import { defaultConfig } from "@/lib/render";
 const STEPS = [
   {
     title: "Choose a family",
-    body: "Eight drawing engines, from drifting Aurora ribbons to a shattered Tessellate mosaic. Each one is a different way of filling a frame.",
+    body: "A dozen drawing engines, from drifting Aurora ribbons to veined Marble and print shop Halftone. Each one is a different way of filling a frame.",
   },
   {
     title: "Tune the composition",
@@ -167,7 +167,7 @@ export default function HomePage() {
       {/* families */}
       <section className="mx-auto max-w-6xl px-5 py-24">
         <Reveal>
-          <h2 className="font-display text-3xl text-ink sm:text-4xl">Eight ways to fill a frame</h2>
+          <h2 className="font-display text-3xl text-ink sm:text-4xl">Twelve ways to fill a frame</h2>
           <p className="mt-2 max-w-lg text-sm text-ink-soft">
             Each family is its own algorithm. Tap one to start a fresh piece in
             the studio.
@@ -216,7 +216,7 @@ export default function HomePage() {
             </p>
             <div className="mt-8 grid grid-cols-3 gap-4">
               {[
-                { label: "Combinations", value: 639936, suffix: "+" },
+                { label: "Combinations", value: 959904, suffix: "+" },
                 { label: "Export formats", value: 1, suffix: " PNG" },
                 { label: "Backend calls", value: 0 },
               ].map((stat) => (
