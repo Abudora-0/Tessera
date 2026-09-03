@@ -21,6 +21,7 @@ export function SiteFooter() {
           </p>
           <Link href="/gallery" className="block text-ink-soft hover:text-ink">Gallery</Link>
           <Link href="/studio" className="block text-ink-soft hover:text-ink">Studio</Link>
+          <Link href="/discover" className="block text-ink-soft hover:text-ink">Discover</Link>
           <Link href="/gallery?view=shelf" className="block text-ink-soft hover:text-ink">Your shelf</Link>
           <Link href="/about" className="block text-ink-soft hover:text-ink">About</Link>
         </nav>

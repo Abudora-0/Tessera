@@ -72,7 +72,9 @@ export function CommandPalette() {
       { id: "home", label: "Go to Home", group: "Navigate", run: go("/") },
       { id: "gallery", label: "Open the Gallery", group: "Navigate", run: go("/gallery") },
       { id: "studio", label: "Open the Studio", group: "Navigate", run: go("/studio") },
+      { id: "discover", label: "Open Discover", group: "Navigate", hint: "web sources", run: go("/discover") },
       { id: "shelf", label: "Open your Shelf", group: "Navigate", run: go("/gallery?view=shelf") },
+      { id: "saved-photos", label: "Open saved photos", group: "Navigate", run: go("/discover?view=saved") },
       { id: "about", label: "About Tessera", group: "Navigate", run: go("/about") },
     ];
     const actions: Command[] = [
@@ -84,6 +86,16 @@ export function CommandPalette() {
         run: () => {
           setOpen(false);
           router.push(`/studio?${configToQuery(randomConfig())}`);
+        },
+      },
+      {
+        id: "search-photos",
+        label: "Search photos on the web",
+        group: "Actions",
+        hint: "discover",
+        run: () => {
+          setOpen(false);
+          router.push("/discover");
         },
       },
       { id: "theme", label: "Flip the theme", group: "Actions", run: () => toggleTheme() },

@@ -13,9 +13,20 @@ export type FavoriteEntry = {
   addedAt: number;
 };
 
+export type SavedPhoto = {
+  source: string;
+  id: string;
+  title: string;
+  thumbUrl: string;
+  color: string;
+  addedAt: number;
+};
+
 type StoreState = {
   theme: ThemeMode;
   favorites: FavoriteEntry[];
+  savedPhotos: SavedPhoto[];
+  nsfwEnabled: boolean;
   paletteOpen: boolean;
   hydrated: boolean;
   setTheme: (theme: ThemeMode) => void;
@@ -25,6 +36,10 @@ type StoreState = {
   isFavorite: (slug: string) => boolean;
   toggleFavorite: (entry: Omit<FavoriteEntry, "addedAt">) => void;
   clearFavorites: () => void;
+  isSavedPhoto: (source: string, id: string) => boolean;
+  toggleSavedPhoto: (entry: Omit<SavedPhoto, "addedAt">) => void;
+  clearSavedPhotos: () => void;
+  setNsfwEnabled: (value: boolean) => void;
 };
 
 export const useStore = create<StoreState>()(
@@ -32,6 +47,8 @@ export const useStore = create<StoreState>()(
     (set, get) => ({
       theme: "dark",
       favorites: [],
+      savedPhotos: [],
+      nsfwEnabled: false,
       paletteOpen: false,
       hydrated: false,
       setTheme: (theme) => set({ theme }),
@@ -48,11 +65,32 @@ export const useStore = create<StoreState>()(
         });
       },
       clearFavorites: () => set({ favorites: [] }),
+      isSavedPhoto: (source, id) =>
+        get().savedPhotos.some((item) => item.source === source && item.id === id),
+      toggleSavedPhoto: (entry) => {
+        const exists = get().savedPhotos.some(
+          (item) => item.source === entry.source && item.id === entry.id,
+        );
+        set({
+          savedPhotos: exists
+            ? get().savedPhotos.filter(
+                (item) => !(item.source === entry.source && item.id === entry.id),
+              )
+            : [{ ...entry, addedAt: Date.now() }, ...get().savedPhotos].slice(0, 120),
+        });
+      },
+      clearSavedPhotos: () => set({ savedPhotos: [] }),
+      setNsfwEnabled: (nsfwEnabled) => set({ nsfwEnabled }),
     }),
     {
       name: "tessera-shelf",
       skipHydration: true,
-      partialize: (state) => ({ theme: state.theme, favorites: state.favorites }),
+      partialize: (state) => ({
+        theme: state.theme,
+        favorites: state.favorites,
+        savedPhotos: state.savedPhotos,
+        nsfwEnabled: state.nsfwEnabled,
+      }),
     },
   ),
 );

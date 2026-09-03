@@ -56,6 +56,9 @@ backend involved.
 - **Eight colour palettes.** From Midnight and Ice to Ember and Neon, tuned by hand.
 - **The Studio.** Live preview with themed controls for density, contrast, detail,
   turbulence and grain. Roll the seed until a piece stops you.
+- **Discover.** A separate section that searches real wallpapers live across
+  Unsplash, Pexels, Pixabay, Wallhaven, NASA and Reddit wallpaper subreddits,
+  with author, source and licence on every result.
 - **Exact device exports.** Presets for phones, tablets and desktops up to 5K,
   plus any custom size. Renders off screen at native resolution, up to 8192 pixels
   on the long edge.
@@ -88,6 +91,31 @@ engine through controls that match the mosaic theme:
 | Grain        | Film grain layered on top                                  |
 | Device       | Desktop, mobile or tablet resolution presets, or a custom size |
 
+## Discover
+
+Discover is a separate section (`/discover`) that pulls real wallpapers live from
+third party APIs and normalizes every result into one shape. Each source is an
+adapter in `src/lib/sources/`; API route handlers in `src/app/api/discover/` call
+them and return JSON with a cursor for infinite scroll. Downloads are streamed
+through `src/app/api/download/` so the filename and attachment header are ours
+and Unsplash's download ping is honoured.
+
+| Source | Licence | Key |
+| ------ | ------- | --- |
+| Unsplash | Unsplash License | `UNSPLASH_ACCESS_KEY` |
+| Pexels | Pexels License | `PEXELS_API_KEY` |
+| Pixabay | Pixabay Content License | `PIXABAY_API_KEY` |
+| Wallhaven | Uploader owned | `WALLHAVEN_API_KEY` (optional, SFW works without) |
+| NASA | Public domain | none |
+| Reddit | Rights retained by original creators | `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, `REDDIT_USER_AGENT` |
+
+Copy `.env.example` to `.env.local` and add the keys you have. Any source without
+a key is simply disabled in the UI; the rest of the site is unaffected. Mature
+content is filtered out by default and only affects Reddit and Wallhaven when
+turned on. Reddit images are posted by users and are mostly copyrighted works, so
+Discover shows the author and links back to the original post; check the source
+before reusing anything commercially.
+
 ## How the engine works
 
 ```
@@ -118,6 +146,7 @@ seed ──► mulberry32 PRNG ──► generator.draw({ ctx, width, height, pa
 | Styling     | Tailwind CSS v4 with design tokens                            |
 | State       | Zustand, persisted to the browser for theme and the shelf    |
 | Noise       | `simplex-noise` for flow fields and topographic layers       |
+| Discover    | Node route handlers proxying third party image APIs          |
 
 ## Getting started
 
@@ -125,10 +154,12 @@ seed ──► mulberry32 PRNG ──► generator.draw({ ctx, width, height, pa
 git clone https://github.com/Abudora-0/tessera.git
 cd tessera
 npm install
+cp .env.example .env.local   # optional, for the Discover section
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3000`. The generative Studio and Gallery need no
+configuration; only Discover reads the keys in `.env.local`.
 
 ### Scripts
 
@@ -143,18 +174,24 @@ Open `http://localhost:3000`.
 
 ```
 src/
-  app/                 Routes: home, gallery, studio, wallpaper/[slug], about
-  components/           Logo, cursor, command palette, themed controls, canvases
+  app/
+    (routes)           home, gallery, studio, discover, wallpaper/[slug], about
+    api/discover/      search + single item route handlers
+    api/download/      streams a source image as an attachment
+  components/
+    discover/          the Discover browser, cards, detail and download panel
+    ...                logo, cursor, command palette, themed controls, canvases
   lib/
     prng.ts            Seeded random and human friendly seed labels
     palettes.ts        Palette definitions and colour helpers
     devices.ts         Device and resolution presets
     generators/        The twelve drawing families and shared helpers
     render.ts          Canvas orchestration, export, URL encoding
+    sources/           One adapter per external wallpaper source
   data/
     collections.ts     Curated presets shown in the gallery
   store/
-    useStore.ts        Theme and the local shelf
+    useStore.ts        Theme, the local shelf and saved photos
 ```
 
 ## Adding a family

@@ -5,7 +5,7 @@ const BASE = "https://tessera-wallpapers.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const routes = ["", "/gallery", "/studio", "/about"].map((path) => ({
+  const routes = ["", "/gallery", "/studio", "/discover", "/about"].map((path) => ({
     url: `${BASE}${path}`,
     lastModified: now,
     changeFrequency: "monthly" as const,

@@ -247,6 +247,33 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* discover */}
+      <section className="mx-auto max-w-6xl px-5 py-24">
+        <Reveal>
+          <div className="flex flex-col items-start gap-6 border border-edge bg-bg-raised p-8 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-ink-faint">
+                Also new
+              </p>
+              <h2 className="mt-2 font-display text-2xl text-ink sm:text-3xl">
+                Prefer a photograph?
+              </h2>
+              <p className="mt-2 max-w-lg text-sm text-ink-soft">
+                Discover searches real wallpapers live from Unsplash, Pexels,
+                Pixabay, Wallhaven, NASA and Reddit, with the credit and licence
+                for every one.
+              </p>
+            </div>
+            <Link
+              href="/discover"
+              className="focus-tile clip-tile shrink-0 bg-accent px-6 py-3.5 text-sm font-medium text-accent-ink"
+            >
+              Open Discover
+            </Link>
+          </div>
+        </Reveal>
+      </section>
+
       {/* cta */}
       <section className="mx-auto max-w-6xl px-5 py-28 text-center">
         <Reveal>

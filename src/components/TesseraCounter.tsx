@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { animate, useInView, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
 
 type Props = {
   value: number;
-  duration?: number;
   suffix?: string;
   prefix?: string;
   className?: string;
@@ -13,23 +12,45 @@ type Props = {
 
 /**
  * A count up display where each digit column slides like a tile rack settling
- * into place. Starts when it scrolls into view and honours reduced motion.
+ * into place. Re-animates whenever the target value changes, and stays correct
+ * when the tab is backgrounded or reduced motion is on.
  */
-export function TesseraCounter({ value, duration = 1.4, suffix = "", prefix = "", className }: Props) {
+export function TesseraCounter({ value, suffix = "", prefix = "", className }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
   const reduce = useReducedMotion();
   const [current, setCurrent] = useState(0);
+  const shown = useRef(0);
 
   useEffect(() => {
-    if (!inView) return;
-    const controls = animate(0, value, {
-      duration: reduce ? 0 : duration,
-      ease: [0.16, 1, 0.3, 1],
-      onUpdate: (latest) => setCurrent(Math.round(latest)),
-    });
-    return () => controls.stop();
-  }, [inView, value, duration, reduce]);
+    const from = shown.current;
+    const to = value;
+    if (from === to) return;
+
+    const snap = () => {
+      shown.current = to;
+      setCurrent(to);
+    };
+    const skip = reduce || (typeof document !== "undefined" && document.hidden);
+    const duration = 900;
+    const start = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const progress = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const next = Math.round(from + (to - from) * eased);
+      shown.current = next;
+      setCurrent(next);
+      if (progress < 1) raf = requestAnimationFrame(tick);
+    };
+    if (!skip) raf = requestAnimationFrame(tick);
+    // setTimeout still fires when rAF is paused (backgrounded tab)
+    const fallback = window.setTimeout(snap, skip ? 0 : duration + 400);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(fallback);
+    };
+  }, [value, reduce]);
 
   const digits = current.toLocaleString("en-US").split("");
 

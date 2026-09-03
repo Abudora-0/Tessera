@@ -11,6 +11,7 @@ import { useMounted } from "@/lib/useMounted";
 const LINKS = [
   { href: "/gallery", label: "Gallery" },
   { href: "/studio", label: "Studio" },
+  { href: "/discover", label: "Discover" },
   { href: "/about", label: "About" },
 ];
 
