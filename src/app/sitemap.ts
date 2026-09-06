@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { COLLECTIONS } from "@/data/collections";
 
-const BASE = "https://tessera-wallpapers.vercel.app";
+const BASE = "https://tesseera.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

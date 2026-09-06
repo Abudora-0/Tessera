@@ -20,9 +20,13 @@
 </p>
 
 <p align="center">
-  <a href="https://tessera-wallpapers.vercel.app">Live demo</a>
-  &nbsp;&middot;&nbsp;
+  <b><a href="https://tesseera.vercel.app">tesseera.vercel.app</a></b>
+</p>
+
+<p align="center">
   <a href="#the-studio">Studio</a>
+  &nbsp;&middot;&nbsp;
+  <a href="#discover">Discover</a>
   &nbsp;&middot;&nbsp;
   <a href="#how-the-engine-works">How it works</a>
   &nbsp;&middot;&nbsp;
@@ -30,7 +34,7 @@
 </p>
 
 <p align="center">
-  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAbudora-0%2Ftessera">
+  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAbudora-0%2FTessera">
     <img alt="Deploy with Vercel" src="https://vercel.com/button" />
   </a>
 </p>
@@ -151,8 +155,8 @@ seed ──► mulberry32 PRNG ──► generator.draw({ ctx, width, height, pa
 ## Getting started
 
 ```bash
-git clone https://github.com/Abudora-0/tessera.git
-cd tessera
+git clone https://github.com/Abudora-0/Tessera.git
+cd Tessera
 npm install
 cp .env.example .env.local   # optional, for the Discover section
 npm run dev
@@ -180,7 +184,7 @@ src/
     api/download/      streams a source image as an attachment
   components/
     discover/          the Discover browser, cards, detail and download panel
-    ...                logo, cursor, command palette, themed controls, canvases
+    ...                animated logo, command palette, themed controls, canvases
   lib/
     prng.ts            Seeded random and human friendly seed labels
     palettes.ts        Palette definitions and colour helpers
@@ -203,13 +207,14 @@ src/
 
 ## Deploy
 
-Tessera is a static Next.js app and needs no configuration to run on Vercel.
+Live at [tesseera.vercel.app](https://tesseera.vercel.app).
 
-1. Push the repository to GitHub.
-2. Import it at [vercel.com/new](https://vercel.com/new).
-3. Accept the defaults and deploy.
-
-Or use the one click button at the top of this file.
+Tessera runs on Vercel with no configuration. Import the repo at
+[vercel.com/new](https://vercel.com/new) and accept the defaults, or use the one
+click button at the top of this file. The generative Studio and Gallery work
+immediately; the Discover section needs the API keys from `.env.example` added as
+project environment variables (Settings, Environment Variables) before its
+Unsplash, Pexels, Pixabay and Reddit tabs light up.
 
 ## Topics
 

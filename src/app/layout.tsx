@@ -16,7 +16,7 @@ const mono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE = "https://tessera-wallpapers.vercel.app";
+const SITE = "https://tesseera.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
