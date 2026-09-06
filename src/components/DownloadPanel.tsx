@@ -97,7 +97,7 @@ export function DownloadPanel({ config, name, slug }: Props) {
         type="button"
         onClick={run}
         disabled={rendering}
-        className="focus-tile clip-tile mt-5 flex w-full items-center justify-center gap-2 bg-accent px-5 py-3.5 text-sm font-medium text-accent-ink transition-transform hover:-translate-y-0.5 disabled:opacity-70"
+        className="btn-primary focus-tile clip-tile mt-5 flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm font-medium disabled:opacity-70"
       >
         {rendering
           ? `Rendering ${resolution.width} by ${resolution.height}`

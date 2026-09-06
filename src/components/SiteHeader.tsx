@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { AnimatedLogo } from "./AnimatedLogo";
 import { ThemeToggle } from "./ThemeToggle";
 import { useStore } from "@/store/useStore";
@@ -62,11 +63,15 @@ export function SiteHeader() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="focus-tile relative px-3 py-2 text-sm text-ink-soft transition-colors hover:text-ink"
+                className="focus-tile group relative px-3 py-2 text-sm text-ink-soft transition-colors hover:text-ink"
               >
                 {link.label}
-                {activeLink ? (
-                  <span className="absolute inset-x-3 -bottom-px h-px bg-accent" />
+                <span
+                  className="absolute inset-x-3 -bottom-px h-px origin-left bg-accent transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                  style={{ transform: activeLink ? "scaleX(1)" : "scaleX(0)" }}
+                />
+                {!activeLink ? (
+                  <span className="absolute inset-x-3 -bottom-px h-px origin-left scale-x-0 bg-accent transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
                 ) : null}
               </Link>
             );
@@ -87,7 +92,7 @@ export function SiteHeader() {
           <Link
             href="/gallery?view=shelf"
             aria-label={`Your shelf, ${favCount} saved`}
-            className="focus-tile relative grid h-9 w-9 place-items-center border border-edge bg-bg-raised transition-colors hover:border-edge-strong"
+            className="pressable focus-tile relative grid h-9 w-9 place-items-center border border-edge bg-bg-raised transition-colors hover:border-accent"
           >
             <span className="h-3.5 w-3.5 border-2 border-ink-soft" style={{ clipPath: "polygon(0 0, 100% 0, 100% 65%, 65% 100%, 0 100%)" }} />
             {favCount > 0 ? (
@@ -103,7 +108,7 @@ export function SiteHeader() {
             type="button"
             aria-label="Toggle menu"
             onClick={() => setMobileOpen((open) => !open)}
-            className="focus-tile grid h-9 w-9 place-items-center border border-edge bg-bg-raised md:hidden"
+            className="pressable focus-tile grid h-9 w-9 place-items-center border border-edge bg-bg-raised transition-colors hover:border-accent md:hidden"
           >
             <span className="relative block h-3 w-4">
               <span
@@ -123,26 +128,42 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {mobileOpen ? (
-        <div className="border-t border-edge bg-bg-raised px-5 py-3 md:hidden">
-          {LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="block py-2.5 text-sm text-ink-soft"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <button
-            type="button"
-            onClick={() => setPaletteOpen(true)}
-            className="mt-1 block py-2.5 text-left text-sm text-ink-soft"
+      <AnimatePresence>
+        {mobileOpen ? (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden border-t border-edge bg-bg-raised md:hidden"
           >
-            Search everything
-          </button>
-        </div>
-      ) : null}
+            <div className="px-5 py-3">
+              {LINKS.map((link, index) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.05 + index * 0.04 }}
+                >
+                  <Link
+                    href={link.href}
+                    className="block py-2.5 text-sm text-ink-soft transition-colors hover:text-ink"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <button
+                type="button"
+                onClick={() => setPaletteOpen(true)}
+                className="mt-1 block py-2.5 text-left text-sm text-ink-soft transition-colors hover:text-ink"
+              >
+                Search everything
+              </button>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 }

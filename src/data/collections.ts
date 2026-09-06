@@ -25,19 +25,19 @@ type RawCollection = {
 
 const RAW: RawCollection[] = [
   { name: "Northern Signal", family: "aurora", palette: "midnight", seed: 1042, params: { turbulence: 0.6, contrast: 0.7 }, tags: ["calm", "night"], featured: true },
-  { name: "Coal Harbour", family: "aurora", palette: "ember", seed: 7731, params: { density: 0.7, grain: 0.5 }, tags: ["warm", "dramatic"] },
+  { name: "Coal Harbour", family: "aurora", palette: "ember", seed: 7731, params: { density: 0.7, grain: 0.32 }, tags: ["warm", "dramatic"] },
   { name: "Glacier Hum", family: "aurora", palette: "ice", seed: 3390, params: { detail: 0.65 }, tags: ["cool", "minimal"], featured: true },
   { name: "Understory", family: "aurora", palette: "verdant", seed: 5521, tags: ["nature", "soft"] },
   { name: "Long Dusk", family: "aurora", palette: "sunset", seed: 8890, params: { contrast: 0.75, turbulence: 0.7 }, tags: ["warm", "scenic"] },
 
-  { name: "Paper Weather", family: "mesh", palette: "mono", seed: 2048, params: { detail: 0.4, grain: 0.5 }, tags: ["minimal", "desk"], featured: true },
+  { name: "Paper Weather", family: "mesh", palette: "mono", seed: 2048, params: { detail: 0.4, grain: 0.32 }, tags: ["minimal", "desk"], featured: true },
   { name: "Slow Bloom", family: "mesh", palette: "bloom", seed: 6614, params: { density: 0.7 }, tags: ["soft", "pastel"] },
   { name: "Cobalt Drift", family: "mesh", palette: "midnight", seed: 991, tags: ["calm", "modern"] },
   { name: "Citrus Fog", family: "mesh", palette: "sunset", seed: 4417, params: { contrast: 0.5 }, tags: ["warm", "soft"] },
   { name: "Meltwater", family: "mesh", palette: "ice", seed: 1200, params: { turbulence: 0.6 }, tags: ["cool", "clean"] },
 
   { name: "Current Study", family: "flow", palette: "neon", seed: 3141, params: { density: 0.7, contrast: 0.7 }, tags: ["energetic", "vivid"], featured: true },
-  { name: "Ink Weather", family: "flow", palette: "mono", seed: 2718, params: { density: 0.8, grain: 0.4 }, tags: ["monochrome", "organic"] },
+  { name: "Ink Weather", family: "flow", palette: "mono", seed: 2718, params: { density: 0.8, grain: 0.3 }, tags: ["monochrome", "organic"] },
   { name: "Reef Lines", family: "flow", palette: "ice", seed: 1618, tags: ["cool", "flowing"] },
   { name: "Emberfield", family: "flow", palette: "ember", seed: 4004, params: { turbulence: 0.7 }, tags: ["warm", "energetic"] },
   { name: "Pollen Path", family: "flow", palette: "verdant", seed: 9021, params: { detail: 0.7 }, tags: ["nature", "detailed"] },

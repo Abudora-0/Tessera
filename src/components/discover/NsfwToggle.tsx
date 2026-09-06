@@ -16,10 +16,10 @@ export function NsfwToggle({
       role="switch"
       aria-checked={value}
       onClick={() => onChange(!value)}
-      className="focus-tile flex items-center gap-2.5 border border-edge bg-bg-raised px-3 py-2 transition-colors hover:border-edge-strong"
+      className="pressable focus-tile flex shrink-0 items-center gap-2.5 border border-edge bg-bg-raised px-3 py-2 transition-colors hover:border-accent"
     >
       <span
-        className="relative h-4 w-7 border border-edge-strong"
+        className="relative h-4 w-7 shrink-0 border border-edge-strong"
         style={{ background: value ? "var(--accent)" : "var(--bg-sunken)" }}
       >
         <motion.span
@@ -28,7 +28,7 @@ export function NsfwToggle({
           transition={{ type: "spring", stiffness: 320, damping: 22 }}
         />
       </span>
-      <span className="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-ink-soft">
+      <span className="whitespace-nowrap font-mono text-[0.66rem] uppercase tracking-[0.16em] text-ink-soft">
         Show mature
       </span>
     </button>

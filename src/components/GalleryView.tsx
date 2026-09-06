@@ -84,7 +84,7 @@ export function GalleryView() {
   }, [isShelf, favorites, family, palette, tag, sort]);
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-16">
+    <div className="mx-auto max-w-6xl px-5 py-12 sm:py-16">
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
           <p className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-ink-faint">
@@ -161,7 +161,7 @@ export function GalleryView() {
 
       {!isShelf ? (
         <Reveal>
-          <div className="mt-20 border border-edge bg-bg-sunken p-8 text-center">
+          <div className="mt-14 sm:mt-20 border border-edge bg-bg-sunken p-8 text-center">
             <h2 className="font-display text-2xl text-ink">Not seeing it here?</h2>
             <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
               The gallery is only a set of presets. The studio can make anything
@@ -169,7 +169,7 @@ export function GalleryView() {
             </p>
             <Link
               href="/studio"
-              className="focus-tile clip-tile mt-6 inline-block bg-accent px-6 py-3 text-sm font-medium text-accent-ink"
+              className="btn-primary focus-tile clip-tile mt-6 inline-block px-6 py-3 text-sm font-medium"
             >
               Open the studio
             </Link>

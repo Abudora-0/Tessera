@@ -178,7 +178,7 @@ export function StudioView() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-12">
+    <div className="mx-auto max-w-6xl px-5 py-10 sm:py-12">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-ink-faint">
@@ -189,7 +189,7 @@ export function StudioView() {
           </h1>
           <p className="mt-2 max-w-md text-sm text-ink-soft">{generator.blurb}.</p>
         </div>
-        <div className="flex items-center gap-2 font-mono text-[0.7rem] text-ink-faint">
+        <div className="hidden items-center gap-2 font-mono text-[0.7rem] text-ink-faint md:flex">
           <kbd className="border border-edge px-1.5 py-1">R</kbd> seed
           <kbd className="border border-edge px-1.5 py-1">⇧R</kbd> all
           <kbd className="border border-edge px-1.5 py-1">F</kbd> family
@@ -255,7 +255,7 @@ export function StudioView() {
           </div>
 
           <div>
-            <div className="mb-2 flex items-center justify-between">
+            <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
               <span className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-ink-faint">
                 Seed
               </span>
@@ -263,14 +263,14 @@ export function StudioView() {
                 <button
                   type="button"
                   onClick={rollSeed}
-                  className="focus-tile border border-edge bg-bg-raised px-3 py-1.5 font-mono text-[0.7rem] text-ink-soft hover:border-accent hover:text-ink"
+                  className="btn-ghost focus-tile bg-bg-raised px-3 py-1.5 font-mono text-[0.7rem] text-ink-soft"
                 >
                   Roll seed
                 </button>
                 <button
                   type="button"
                   onClick={rollAll}
-                  className="focus-tile border border-edge bg-bg-raised px-3 py-1.5 font-mono text-[0.7rem] text-ink-soft hover:border-accent hover:text-ink"
+                  className="btn-ghost focus-tile bg-bg-raised px-3 py-1.5 font-mono text-[0.7rem] text-ink-soft"
                 >
                   Roll everything
                 </button>
@@ -386,7 +386,7 @@ export function StudioView() {
             type="button"
             onClick={doDownload}
             disabled={rendering}
-            className="focus-tile clip-tile flex w-full items-center justify-center gap-3 bg-accent px-6 py-4 text-sm font-medium text-accent-ink transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-70"
+            className="btn-primary focus-tile clip-tile flex w-full items-center justify-center gap-3 px-6 py-4 text-sm font-medium disabled:opacity-70"
           >
             {rendering ? (
               <>

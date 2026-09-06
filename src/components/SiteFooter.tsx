@@ -19,11 +19,11 @@ export function SiteFooter() {
           <p className="font-mono text-[0.62rem] uppercase tracking-[0.24em] text-ink-faint">
             Explore
           </p>
-          <Link href="/gallery" className="block text-ink-soft hover:text-ink">Gallery</Link>
-          <Link href="/studio" className="block text-ink-soft hover:text-ink">Studio</Link>
-          <Link href="/discover" className="block text-ink-soft hover:text-ink">Discover</Link>
-          <Link href="/gallery?view=shelf" className="block text-ink-soft hover:text-ink">Your shelf</Link>
-          <Link href="/about" className="block text-ink-soft hover:text-ink">About</Link>
+          <Link href="/gallery" className="link block w-fit">Gallery</Link>
+          <Link href="/studio" className="link block w-fit">Studio</Link>
+          <Link href="/discover" className="link block w-fit">Discover</Link>
+          <Link href="/gallery?view=shelf" className="link block w-fit">Your shelf</Link>
+          <Link href="/about" className="link block w-fit">About</Link>
         </nav>
 
         <div className="space-y-2 text-sm">
@@ -40,10 +40,10 @@ export function SiteFooter() {
           <p className="font-mono text-[0.62rem] uppercase tracking-[0.24em] text-ink-faint">
             Project
           </p>
-          <a href={REPO} className="block text-ink-soft hover:text-ink" target="_blank" rel="noreferrer">
+          <a href={REPO} className="link block w-fit" target="_blank" rel="noreferrer">
             Source on GitHub
           </a>
-          <a href={`${REPO}/blob/main/LICENSE`} className="block text-ink-soft hover:text-ink" target="_blank" rel="noreferrer">
+          <a href={`${REPO}/blob/main/LICENSE`} className="link block w-fit" target="_blank" rel="noreferrer">
             MIT License
           </a>
           <p className="pt-2 font-mono text-[0.68rem] text-ink-faint">

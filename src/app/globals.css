@@ -69,6 +69,14 @@ body {
   overflow-x: hidden;
 }
 
+/* nothing should ever push a horizontal scrollbar on small screens */
+img,
+canvas,
+svg,
+video {
+  max-width: 100%;
+}
+
 ::selection {
   background: var(--accent);
   color: var(--accent-ink);
@@ -78,6 +86,28 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 500;
   letter-spacing: -0.02em;
+}
+
+/* --------------------------------------------------- interaction defaults */
+
+@media (hover: hover) {
+  a,
+  button:not(:disabled),
+  summary,
+  [role="button"]:not([aria-disabled="true"]) {
+    transition:
+      color 0.18s ease,
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease,
+      opacity 0.18s ease,
+      transform 0.18s ease;
+  }
+}
+
+button:not(:disabled):active,
+[role="button"]:active {
+  transform: translateY(1px);
 }
 
 /* --------------------------------------------------------- themed scrollbar */
@@ -156,6 +186,89 @@ h1, h2, h3, h4 {
 
 .text-balance {
   text-wrap: balance;
+}
+
+/* --------------------------------------------------------- interaction kit */
+
+/* primary call to action: lifts and glows on hover, presses on click */
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  transition:
+    transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.22s ease,
+    filter 0.18s ease;
+}
+@media (hover: hover) {
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--accent) 70%, transparent);
+    filter: brightness(1.05);
+  }
+}
+.btn-primary:active {
+  transform: translateY(0) scale(0.975);
+}
+
+/* quiet outline button */
+.btn-ghost {
+  border: 1px solid var(--edge-strong);
+  color: var(--ink);
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    transform 0.18s ease;
+}
+@media (hover: hover) {
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    background: var(--bg-raised);
+    transform: translateY(-1px);
+  }
+}
+.btn-ghost:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* text link with an underline that grows from the left on hover */
+.link {
+  position: relative;
+  color: var(--ink-soft);
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition:
+    color 0.18s ease,
+    background-size 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (hover: hover) {
+  .link:hover {
+    color: var(--ink);
+    background-size: 100% 1px;
+  }
+}
+
+/* card that lifts toward the pointer */
+.tile-hover {
+  transition:
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease,
+    box-shadow 0.24s ease;
+}
+@media (hover: hover) {
+  .tile-hover:hover {
+    transform: translateY(-3px);
+    border-color: var(--edge-strong);
+    box-shadow: 0 20px 44px -26px rgba(0, 0, 0, 0.75);
+  }
+}
+
+.pressable {
+  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pressable:active {
+  transform: scale(0.94);
 }
 
 /* ------------------------------------------------------------- range slider */
@@ -244,6 +357,31 @@ h1, h2, h3, h4 {
 @keyframes tessera-assemble {
   0% { opacity: 0; transform: translate(var(--fx, 0), var(--fy, 0)) rotate(var(--fr, 0deg)) scale(0.6); }
   100% { opacity: 1; transform: translate(0, 0) rotate(0) scale(1); }
+}
+
+@keyframes tessera-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.28) rotate(8deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+@keyframes tessera-glow {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); }
+  50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 24%, transparent); }
+}
+
+@keyframes tessera-tile-in {
+  0% { opacity: 0; transform: translateY(14px) scale(0.96) rotate(-2deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+}
+
+@keyframes tessera-rise {
+  0% { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-pop {
+  animation: tessera-pop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .animate-marquee {

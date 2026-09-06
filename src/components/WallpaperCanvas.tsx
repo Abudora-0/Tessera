@@ -15,12 +15,15 @@ type Props = {
   rounded?: boolean;
 };
 
+/** Render above display resolution so the browser downsamples for free anti aliasing. */
+const SUPERSAMPLE = 1.5;
+
 export function WallpaperCanvas({
   config,
   ratio = 16 / 9,
   className,
   eager = false,
-  maxPixels = 1_600_000,
+  maxPixels = 3_200_000,
   rounded = true,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -51,16 +54,20 @@ export function WallpaperCanvas({
     const canvas = canvasRef.current;
     if (!wrap || !canvas) return;
 
-    let frame = 0;
+    let timer = 0;
+    let tries = 0;
+    // setTimeout rather than rAF so the preview still paints in a background tab
     const paint = () => {
       const rect = wrap.getBoundingClientRect();
-      if (rect.width < 2) {
-        frame = requestAnimationFrame(paint);
+      if (rect.width < 2 && tries < 40) {
+        tries += 1;
+        timer = window.setTimeout(paint, 32);
         return;
       }
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      let w = Math.round(rect.width * dpr);
-      let h = Math.round((rect.width / ratio) * dpr);
+      const width = Math.max(rect.width, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2) * SUPERSAMPLE;
+      let w = Math.round(width * dpr);
+      let h = Math.round((width / ratio) * dpr);
       const pixels = w * h;
       if (pixels > maxPixels) {
         const factor = Math.sqrt(maxPixels / pixels);
@@ -70,8 +77,8 @@ export function WallpaperCanvas({
       renderToCanvas(canvas, config, w, h);
       setPainted(true);
     };
-    frame = requestAnimationFrame(paint);
-    return () => cancelAnimationFrame(frame);
+    timer = window.setTimeout(paint, 16);
+    return () => window.clearTimeout(timer);
   }, [visible, config, ratio, maxPixels]);
 
   return (

@@ -31,7 +31,7 @@ export function PhotoDetail({ item }: { item: SourceWallpaper }) {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-12">
+    <div className="mx-auto max-w-6xl px-5 py-10 sm:py-12">
       <nav className="mb-8 flex items-center gap-2 font-mono text-[0.7rem] text-ink-faint">
         <Link href="/discover" className="hover:text-ink">Discover</Link>
         <span>/</span>
@@ -99,11 +99,11 @@ export function PhotoDetail({ item }: { item: SourceWallpaper }) {
         </div>
       </div>
 
-      <section className="mt-24 border border-edge bg-bg-sunken p-8 text-center">
+      <section className="mt-16 sm:mt-24 border border-edge bg-bg-sunken p-8 text-center">
         <h2 className="font-display text-2xl text-ink">More from {SOURCE_LABEL[item.source] ?? item.source}</h2>
         <Link
           href={`/discover?source=${item.source}`}
-          className="focus-tile clip-tile mt-6 inline-block bg-accent px-6 py-3 text-sm font-medium text-accent-ink"
+          className="btn-primary focus-tile clip-tile mt-6 inline-block px-6 py-3 text-sm font-medium"
         >
           Keep browsing
         </Link>

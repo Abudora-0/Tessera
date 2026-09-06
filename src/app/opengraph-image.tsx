@@ -20,13 +20,13 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <div style={{ position: "relative", width: 64, height: 64, display: "flex" }}>
-            <div style={{ position: "absolute", width: 0, height: 0, borderTop: "28px solid #e8b04b", borderRight: "28px solid transparent" }} />
-            <div style={{ position: "absolute", right: 0, width: 0, height: 0, borderTop: "28px solid #8b7bff", borderLeft: "28px solid transparent" }} />
-            <div style={{ position: "absolute", bottom: 0, width: 0, height: 0, borderBottom: "28px solid #f3f1ec", borderRight: "28px solid transparent" }} />
-            <div style={{ position: "absolute", right: 0, bottom: 0, width: 0, height: 0, borderBottom: "28px solid #e8b04b", borderLeft: "28px solid transparent" }} />
+          <div style={{ position: "relative", width: 60, height: 60, display: "flex" }}>
+            <div style={{ position: "absolute", width: 0, height: 0, borderTop: "30px solid #e8b04b", borderRight: "30px solid transparent" }} />
+            <div style={{ position: "absolute", right: 0, width: 0, height: 0, borderTop: "30px solid #8b7bff", borderLeft: "30px solid transparent" }} />
+            <div style={{ position: "absolute", bottom: 0, width: 0, height: 0, borderBottom: "30px solid #f3f1ec", borderRight: "30px solid transparent" }} />
+            <div style={{ position: "absolute", right: 0, bottom: 0, width: 0, height: 0, borderBottom: "30px solid #e8b04b", borderLeft: "30px solid transparent" }} />
           </div>
-          <div style={{ color: "#f3f1ec", fontSize: 34, letterSpacing: -1 }}>Tessera</div>
+          <div style={{ color: "#f3f1ec", fontSize: 34, letterSpacing: -1 }}>tessera</div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>

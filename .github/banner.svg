@@ -16,13 +16,13 @@
   <path d="M0 300 C 240 270, 420 340, 640 300 S 1040 250, 1280 290 L 1280 360 L 0 360 Z" fill="#8b7bff" fill-opacity="0.12"/>
 
   <g transform="translate(96 118)">
-    <polygon points="0,0 52,0 0,52" fill="#e8b04b"/>
-    <polygon points="60,0 60,52 112,0" fill="#8b7bff"/>
-    <polygon points="0,60 52,112 0,112" fill="#f3f1ec"/>
-    <polygon points="60,60 112,60 112,112" fill="#e8b04b"/>
+    <polygon points="56,56 0,0 56,0" fill="#e8b04b"/>
+    <polygon points="56,56 112,0 112,56" fill="#8b7bff"/>
+    <polygon points="56,56 112,112 56,112" fill="#e8b04b"/>
+    <polygon points="56,56 0,112 0,56" fill="#f3f1ec"/>
   </g>
 
-  <text x="240" y="170" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="64" font-weight="600" fill="#f3f1ec" letter-spacing="-1.5">Tessera</text>
+  <text x="240" y="170" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="60" font-weight="500" fill="#f3f1ec" letter-spacing="-1">tessera</text>
   <text x="242" y="212" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="19" fill="#b7b4ad" letter-spacing="1">A generative wallpaper studio. Every piece is drawn from a seed.</text>
 
   <g transform="translate(242 244)" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="13" fill="#6f6d67">

@@ -24,7 +24,7 @@ const STACK = [
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-5 py-16">
+    <div className="mx-auto max-w-3xl px-5 py-12 sm:py-16">
       <Reveal>
         <p className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-ink-faint">About</p>
         <h1 className="mt-3 text-balance font-display text-4xl text-ink sm:text-5xl">
@@ -124,13 +124,13 @@ export default function AboutPage() {
               href="https://github.com/Abudora-0/tessera"
               target="_blank"
               rel="noreferrer"
-              className="focus-tile clip-tile bg-accent px-6 py-3 text-sm font-medium text-accent-ink"
+              className="btn-primary focus-tile clip-tile px-6 py-3 text-sm font-medium"
             >
               View the source
             </a>
             <Link
               href="/studio"
-              className="focus-tile border border-edge-strong px-6 py-3 text-sm text-ink hover:border-accent"
+              className="btn-ghost focus-tile px-6 py-3 text-sm text-ink"
             >
               Open the studio
             </Link>

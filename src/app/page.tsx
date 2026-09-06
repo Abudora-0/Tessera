@@ -41,18 +41,18 @@ export default function HomePage() {
   return (
     <div>
       {/* hero */}
-      <section className="relative flex min-h-[92vh] items-center overflow-hidden border-b border-edge">
+      <section className="relative flex min-h-[88vh] items-center overflow-hidden border-b border-edge">
         <HeroCanvas seedConfig={heroConfig} />
-        <div className="relative mx-auto w-full max-w-6xl px-5 py-24">
+        <div className="relative mx-auto w-full max-w-6xl px-5 py-20 sm:py-24">
           <div className="max-w-2xl">
-            <p className="mb-5 inline-flex items-center gap-2 border border-edge bg-bg-raised/70 px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-ink-soft backdrop-blur">
+            <p className="mb-5 inline-flex items-center gap-2 border border-edge bg-bg-raised/70 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.22em] text-ink-soft backdrop-blur sm:text-[0.68rem] sm:tracking-[0.24em]">
               <span className="h-1.5 w-1.5 rotate-45 bg-accent" />
               Generative wallpaper studio
             </p>
-            <h1 className="text-balance font-display text-5xl leading-[1.02] text-ink sm:text-6xl md:text-7xl">
+            <h1 className="text-balance font-display text-[2.4rem] leading-[1.06] text-ink sm:text-6xl sm:leading-[1.02] md:text-7xl">
               Wallpapers grown from a single seed.
             </h1>
-            <p className="mt-6 max-w-xl text-base text-ink-soft sm:text-lg">
+            <p className="mt-6 max-w-xl text-[0.95rem] text-ink-soft sm:text-lg">
               Tessera does not store images. It draws them. Choose a family and a
               palette, shape the composition, then export something pixel perfect
               for any screen you own.
@@ -60,13 +60,13 @@ export default function HomePage() {
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link
                 href="/studio"
-                className="focus-tile clip-tile bg-accent px-6 py-3.5 text-sm font-medium text-accent-ink transition-transform hover:-translate-y-0.5"
+                className="btn-primary focus-tile clip-tile px-6 py-3.5 text-sm font-medium"
               >
                 Open the studio
               </Link>
               <Link
                 href="/gallery"
-                className="focus-tile border border-edge-strong bg-bg-raised/70 px-6 py-3.5 text-sm text-ink backdrop-blur transition-colors hover:border-accent"
+                className="btn-ghost focus-tile bg-bg-raised/70 px-6 py-3.5 text-sm text-ink backdrop-blur"
               >
                 Browse the gallery
               </Link>
@@ -118,7 +118,7 @@ export default function HomePage() {
       />
 
       {/* how it works */}
-      <section className="mx-auto max-w-6xl px-5 py-24">
+      <section className="mx-auto max-w-6xl px-5 py-14 sm:py-24">
         <Reveal>
           <h2 className="max-w-xl text-balance font-display text-3xl text-ink sm:text-4xl">
             Three moves from blank frame to finished wallpaper.
@@ -141,7 +141,7 @@ export default function HomePage() {
 
       {/* featured */}
       <section className="border-y border-edge bg-bg-sunken">
-        <div className="mx-auto max-w-6xl px-5 py-24">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:py-24">
           <div className="flex items-end justify-between gap-4">
             <Reveal>
               <h2 className="font-display text-3xl text-ink sm:text-4xl">Featured pieces</h2>
@@ -165,7 +165,7 @@ export default function HomePage() {
       </section>
 
       {/* families */}
-      <section className="mx-auto max-w-6xl px-5 py-24">
+      <section className="mx-auto max-w-6xl px-5 py-14 sm:py-24">
         <Reveal>
           <h2 className="font-display text-3xl text-ink sm:text-4xl">Twelve ways to fill a frame</h2>
           <p className="mt-2 max-w-lg text-sm text-ink-soft">
@@ -178,7 +178,7 @@ export default function HomePage() {
             <Reveal key={generator.id} delay={Math.min(index * 0.05, 0.3)}>
               <Link
                 href={`/studio?f=${generator.id}`}
-                className="focus-tile group block border border-edge transition-colors hover:border-accent"
+                className="focus-tile group block border border-edge transition-colors"
               >
                 <WallpaperCanvas
                   config={{
@@ -204,7 +204,7 @@ export default function HomePage() {
 
       {/* features */}
       <section className="border-y border-edge bg-bg-sunken">
-        <div className="mx-auto grid max-w-6xl gap-12 px-5 py-24 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="mx-auto grid max-w-6xl gap-12 px-5 py-14 sm:py-24 lg:grid-cols-[0.9fr_1.1fr]">
           <Reveal>
             <h2 className="font-display text-3xl text-ink sm:text-4xl">
               Small site, serious about the details.
@@ -248,7 +248,7 @@ export default function HomePage() {
       </section>
 
       {/* discover */}
-      <section className="mx-auto max-w-6xl px-5 py-24">
+      <section className="mx-auto max-w-6xl px-5 py-14 sm:py-24">
         <Reveal>
           <div className="flex flex-col items-start gap-6 border border-edge bg-bg-raised p-8 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -266,7 +266,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/discover"
-              className="focus-tile clip-tile shrink-0 bg-accent px-6 py-3.5 text-sm font-medium text-accent-ink"
+              className="btn-primary focus-tile clip-tile shrink-0 px-6 py-3.5 text-sm font-medium"
             >
               Open Discover
             </Link>
@@ -275,7 +275,7 @@ export default function HomePage() {
       </section>
 
       {/* cta */}
-      <section className="mx-auto max-w-6xl px-5 py-28 text-center">
+      <section className="mx-auto max-w-6xl px-5 py-20 sm:py-28 text-center">
         <Reveal>
           <h2 className="mx-auto max-w-2xl text-balance font-display text-4xl text-ink sm:text-5xl">
             Your next wallpaper does not exist yet. Go draw it.
@@ -283,13 +283,13 @@ export default function HomePage() {
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link
               href="/studio"
-              className="focus-tile clip-tile bg-accent px-7 py-4 text-sm font-medium text-accent-ink transition-transform hover:-translate-y-0.5"
+              className="btn-primary focus-tile clip-tile px-7 py-4 text-sm font-medium"
             >
               Start in the studio
             </Link>
             <Link
               href="/gallery"
-              className="focus-tile border border-edge-strong px-7 py-4 text-sm text-ink transition-colors hover:border-accent"
+              className="btn-ghost focus-tile px-7 py-4 text-sm text-ink"
             >
               See the gallery first
             </Link>

@@ -25,7 +25,7 @@ export function PhotoCard({ item, index = 0 }: { item: SourceWallpaper; index?: 
         className="focus-tile block"
       >
         <div
-          className="relative aspect-[4/3] overflow-hidden border border-edge transition-colors group-hover:border-edge-strong"
+          className="tile-hover relative aspect-[4/3] overflow-hidden border border-edge"
           style={{ background: item.color }}
         >
           {!failed ? (

@@ -75,7 +75,7 @@ export default async function WallpaperPage({ params }: PageProps<"/wallpaper/[s
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-12">
+    <div className="mx-auto max-w-6xl px-5 py-10 sm:py-12">
       <nav className="mb-8 flex items-center gap-2 font-mono text-[0.7rem] text-ink-faint">
         <Link href="/gallery" className="hover:text-ink">Gallery</Link>
         <span>/</span>
@@ -121,7 +121,7 @@ export default async function WallpaperPage({ params }: PageProps<"/wallpaper/[s
         </div>
       </div>
 
-      <section className="mt-24">
+      <section className="mt-16 sm:mt-24">
         <Reveal>
           <h2 className="font-display text-2xl text-ink">
             {known ? "In the same vein" : "From the gallery"}

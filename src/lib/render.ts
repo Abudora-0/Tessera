@@ -44,16 +44,39 @@ export function renderToCanvas(
   generator.draw({ ctx, width: w, height: h, palette, rng, params: config.params });
 }
 
-/** Render at full resolution off screen and hand back a PNG blob. */
+/**
+ * Render at full resolution off screen and hand back a PNG blob. Exports below
+ * 4K are drawn at 1.25x and downscaled so thin strokes and edges stay clean.
+ */
 export async function renderToBlob(
   config: WallpaperConfig,
   width: number,
   height: number,
 ): Promise<Blob> {
-  const canvas = document.createElement("canvas");
-  renderToCanvas(canvas, config, width, height);
+  const target = clampDimension(width);
+  const targetH = clampDimension(height);
+  const supersample = Math.max(target, targetH) <= 4000 ? 1.25 : 1;
+
+  const source = document.createElement("canvas");
+  renderToCanvas(source, config, Math.round(target * supersample), Math.round(targetH * supersample));
+
+  let output = source;
+  if (supersample !== 1) {
+    output = document.createElement("canvas");
+    output.width = target;
+    output.height = targetH;
+    const octx = output.getContext("2d");
+    if (octx) {
+      octx.imageSmoothingEnabled = true;
+      octx.imageSmoothingQuality = "high";
+      octx.drawImage(source, 0, 0, target, targetH);
+    } else {
+      output = source;
+    }
+  }
+
   return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => {
+    output.toBlob((blob) => {
       if (blob) resolve(blob);
       else reject(new Error("Tessera could not encode the image"));
     }, "image/png");

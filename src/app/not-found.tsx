@@ -16,13 +16,13 @@ export default function NotFound() {
       <div className="mt-8 flex gap-3">
         <Link
           href="/"
-          className="focus-tile clip-tile bg-accent px-6 py-3 text-sm font-medium text-accent-ink"
+          className="btn-primary focus-tile clip-tile px-6 py-3 text-sm font-medium"
         >
           Back home
         </Link>
         <Link
           href="/gallery"
-          className="focus-tile border border-edge-strong px-6 py-3 text-sm text-ink hover:border-accent"
+          className="btn-ghost focus-tile px-6 py-3 text-sm text-ink"
         >
           Open the gallery
         </Link>

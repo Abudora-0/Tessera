@@ -32,10 +32,14 @@ export function PhotoSaveButton({
       }}
       aria-pressed={saved}
       aria-label={saved ? "Remove from shelf" : "Save to shelf"}
-      className="focus-tile flex shrink-0 items-center gap-2 border border-edge bg-bg-raised px-2 py-2 transition-colors hover:border-edge-strong"
+      className="pressable focus-tile flex shrink-0 items-center gap-2 border border-edge bg-bg-raised px-2 py-2 transition-colors hover:border-accent"
     >
       <motion.span
-        animate={{ rotate: saved ? 45 : 0, backgroundColor: saved ? "var(--accent)" : "rgba(0,0,0,0)" }}
+        animate={{
+          rotate: saved ? 45 : 0,
+          scale: saved ? [1, 1.45, 1] : 1,
+          backgroundColor: saved ? "var(--accent)" : "rgba(0,0,0,0)",
+        }}
         transition={{ type: "spring", stiffness: 300, damping: 15 }}
         className="block h-3 w-3 border-2"
         style={{ borderColor: "var(--accent)" }}

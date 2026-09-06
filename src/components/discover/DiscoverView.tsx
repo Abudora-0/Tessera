@@ -155,7 +155,7 @@ export function DiscoverView() {
   const savedList = mounted ? savedPhotos : [];
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-16">
+    <div className="mx-auto max-w-6xl px-5 py-12 sm:py-16">
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
           <p className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-ink-faint">
@@ -198,15 +198,15 @@ export function DiscoverView() {
               event.preventDefault();
               setQuery(queryInput.trim());
             }}
-            className="flex gap-2"
+            className="flex flex-col gap-2 sm:flex-row"
           >
             <input
               value={queryInput}
               onChange={(event) => setQueryInput(event.target.value)}
-              placeholder={source === "reddit" ? "Search within the selected subreddits" : "Search wallpapers, e.g. mountains, city night, abstract"}
-              className="focus-tile flex-1 border border-edge bg-bg-raised px-3.5 py-2.5 text-sm text-ink outline-none placeholder:text-ink-faint"
+              placeholder={source === "reddit" ? "Search the selected subreddits" : "Search wallpapers, e.g. mountains, city night"}
+              className="focus-tile min-w-0 flex-1 border border-edge bg-bg-raised px-3.5 py-2.5 text-sm text-ink outline-none placeholder:text-ink-faint"
             />
-            <button type="submit" className="focus-tile clip-tile bg-accent px-5 py-2.5 text-sm font-medium text-accent-ink">
+            <button type="submit" className="btn-primary focus-tile clip-tile px-5 py-2.5 text-sm font-medium">
               Search
             </button>
           </form>
@@ -223,10 +223,10 @@ export function DiscoverView() {
           </div>
 
           {showNsfwToggle ? (
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <NsfwToggle value={nsfwEnabled} onChange={setNsfwEnabled} />
               <span className="font-mono text-[0.62rem] text-ink-faint">
-                Off by default. Only affects Reddit and Wallhaven.
+                Off by default. Affects Reddit and Wallhaven only.
               </span>
             </div>
           ) : null}
@@ -309,12 +309,12 @@ export function DiscoverView() {
       )}
 
       <Reveal>
-        <div className="mt-20 border border-edge bg-bg-sunken p-8 text-center">
+        <div className="mt-14 sm:mt-20 border border-edge bg-bg-sunken p-8 text-center">
           <h2 className="font-display text-2xl text-ink">Want something truly one of a kind?</h2>
           <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
             The Studio draws wallpapers from scratch. No two seeds look the same.
           </p>
-          <Link href="/studio" className="focus-tile clip-tile mt-6 inline-block bg-accent px-6 py-3 text-sm font-medium text-accent-ink">
+          <Link href="/studio" className="btn-primary focus-tile clip-tile mt-6 inline-block px-6 py-3 text-sm font-medium">
             Open the Studio
           </Link>
         </div>

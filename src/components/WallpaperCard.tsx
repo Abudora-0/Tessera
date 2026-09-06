@@ -25,7 +25,7 @@ export function WallpaperCard({ collection, index = 0, ratio = 16 / 10 }: Props)
       className="group relative"
     >
       <Link href={`/wallpaper/${collection.slug}`} className="focus-tile block">
-        <div className="relative overflow-hidden border border-edge transition-colors group-hover:border-edge-strong">
+        <div className="tile-hover relative overflow-hidden border border-edge">
           <WallpaperCanvas config={collection.config} ratio={ratio} rounded={false} />
           <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: "linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55))" }} />
           <div className="pointer-events-none absolute bottom-0 left-0 flex translate-y-2 items-center gap-2 p-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
@@ -38,7 +38,7 @@ export function WallpaperCard({ collection, index = 0, ratio = 16 / 10 }: Props)
 
       <div className="mt-2.5 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="truncate font-display text-[0.95rem] text-ink">{collection.name}</h3>
+          <h3 className="truncate font-display text-[0.95rem] text-ink transition-colors group-hover:text-accent">{collection.name}</h3>
           <p className="mt-0.5 flex items-center gap-1.5 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-ink-faint">
             <span
               className="inline-block h-2 w-2 rotate-45"
