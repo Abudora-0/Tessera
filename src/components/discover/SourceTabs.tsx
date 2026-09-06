@@ -25,7 +25,7 @@ export function SourceTabs({ sources, active, onChange }: Props) {
             disabled={!tab.configured}
             onClick={() => onChange(tab.id)}
             title={tab.configured ? undefined : "Needs an API key in the environment"}
-            className="focus-tile border px-3.5 py-2 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-35"
+            className="focus-tile border px-3.5 py-2 text-sm transition-all hover:-translate-y-px disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-35"
             style={{
               borderColor: isActive ? "var(--accent)" : "var(--edge)",
               color: isActive ? "var(--accent)" : "var(--ink-soft)",

@@ -44,11 +44,10 @@ export default function AboutPage() {
         </p>
         <p className="mt-4 text-base text-ink-soft">
           The Discover section is the one place Tessera shows photographs. It
-          searches live across Unsplash, Pexels, Pixabay, Wallhaven, NASA and a
-          set of wallpaper subreddits on Reddit. Nothing is rehosted permanently:
-          each image is fetched on demand and shown with its author, source and
-          licence. Reddit results link back to the original post, and mature
-          content is filtered out unless you turn it on.
+          searches live across Unsplash, Pexels, Pixabay, Wallhaven and NASA.
+          Nothing is rehosted permanently: each image is fetched on demand and
+          shown with its author, source and licence, and links back to the
+          original.
         </p>
       </Reveal>
 

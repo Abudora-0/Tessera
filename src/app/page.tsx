@@ -260,8 +260,8 @@ export default function HomePage() {
               </h2>
               <p className="mt-2 max-w-lg text-sm text-ink-soft">
                 Discover searches real wallpapers live from Unsplash, Pexels,
-                Pixabay, Wallhaven, NASA and Reddit, with the credit and licence
-                for every one.
+                Pixabay, Wallhaven and NASA, with the credit and licence for
+                every one.
               </p>
             </div>
             <Link

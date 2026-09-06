@@ -14,7 +14,6 @@ const SOURCE_LABEL: Record<string, string> = {
   pixabay: "Pixabay",
   wallhaven: "Wallhaven",
   nasa: "NASA",
-  reddit: "Reddit",
 };
 
 export function PhotoDetail({ item }: { item: SourceWallpaper }) {

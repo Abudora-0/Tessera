@@ -11,7 +11,7 @@ export async function sourceFetch(
   return fetch(url, {
     ...rest,
     headers: {
-      "User-Agent": process.env.REDDIT_USER_AGENT || "Tessera/1.0 (wallpaper discovery)",
+      "User-Agent": "Tessera/1.0 (+https://tesseera.vercel.app)",
       Accept: "application/json",
       ...headers,
     },

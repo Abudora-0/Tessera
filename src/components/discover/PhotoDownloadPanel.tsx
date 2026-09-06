@@ -44,13 +44,6 @@ export function PhotoDownloadPanel({ item }: { item: SourceWallpaper }) {
           View original
         </a>
       </div>
-
-      {item.source === "reddit" ? (
-        <p className="mt-4 font-mono text-[0.62rem] leading-relaxed text-ink-faint">
-          Reddit posts are shared by users. Rights stay with the original creator.
-          Check the source before reusing commercially.
-        </p>
-      ) : null}
     </div>
   );
 }

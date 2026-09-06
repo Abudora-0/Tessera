@@ -5,7 +5,7 @@ import { DiscoverView } from "@/components/discover/DiscoverView";
 export const metadata: Metadata = {
   title: "Discover",
   description:
-    "Search real wallpapers from Unsplash, Pexels, Pixabay, Wallhaven, NASA and Reddit. Filter by shape and category, then download at the sizes each source offers.",
+    "Search real wallpapers from Unsplash, Pexels, Pixabay, Wallhaven and NASA. Filter by shape, then download at the sizes each source offers.",
 };
 
 export default function DiscoverPage() {

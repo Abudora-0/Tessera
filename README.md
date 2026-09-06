@@ -61,8 +61,8 @@ backend involved.
 - **The Studio.** Live preview with themed controls for density, contrast, detail,
   turbulence and grain. Roll the seed until a piece stops you.
 - **Discover.** A separate section that searches real wallpapers live across
-  Unsplash, Pexels, Pixabay, Wallhaven, NASA and Reddit wallpaper subreddits,
-  with author, source and licence on every result.
+  Unsplash, Pexels, Pixabay, Wallhaven and NASA, with author, source and licence
+  on every result.
 - **Exact device exports.** Presets for phones, tablets and desktops up to 5K,
   plus any custom size. Renders off screen at native resolution, up to 8192 pixels
   on the long edge.
@@ -111,14 +111,10 @@ and Unsplash's download ping is honoured.
 | Pixabay | Pixabay Content License | `PIXABAY_API_KEY` |
 | Wallhaven | Uploader owned | none for SFW, `WALLHAVEN_API_KEY` for mature |
 | NASA | Public domain | none |
-| Reddit | Rights retained by original creators | none, or `REDDIT_CLIENT_ID` + `REDDIT_CLIENT_SECRET` + `REDDIT_USER_AGENT` to raise limits |
 
 Copy `.env.example` to `.env.local` and add the keys you have. Any source without
 a key is simply disabled in the UI; the rest of the site is unaffected. Mature
-content is filtered out by default and only affects Reddit and Wallhaven when
-turned on. Reddit images are posted by users and are mostly copyrighted works, so
-Discover shows the author and links back to the original post; check the source
-before reusing anything commercially.
+content is filtered out by default and only affects Wallhaven when turned on.
 
 ## How the engine works
 
@@ -212,7 +208,7 @@ Live at [tesseera.vercel.app](https://tesseera.vercel.app).
 Tessera runs on Vercel with no configuration. Import the repo at
 [vercel.com/new](https://vercel.com/new) and accept the defaults, or use the one
 click button at the top of this file. The generative Studio and Gallery work
-immediately, and Discover already works for NASA, Wallhaven and Reddit. Add the
+immediately, and Discover already works for NASA and Wallhaven. Add the
 `UNSPLASH_ACCESS_KEY`, `PEXELS_API_KEY` and `PIXABAY_API_KEY` values from
 `.env.example` as project environment variables (Settings, Environment Variables)
 to enable those three tabs too.

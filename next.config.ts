@@ -10,11 +10,6 @@ const remoteHosts = [
   "images-assets.nasa.gov",
   "images-api.nasa.gov",
   "apod.nasa.gov",
-  "i.redd.it",
-  "preview.redd.it",
-  "external-preview.redd.it",
-  "b.thumbs.redditmedia.com",
-  "a.thumbs.redditmedia.com",
 ];
 
 const nextConfig: NextConfig = {

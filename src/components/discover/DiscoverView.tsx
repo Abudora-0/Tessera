@@ -3,13 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ThemedSelect } from "@/components/ThemedSelect";
 import { TesseraCounter } from "@/components/TesseraCounter";
 import { Reveal } from "@/components/Motion";
 import { useStore } from "@/store/useStore";
 import { useMounted } from "@/lib/useMounted";
-import { SUBREDDIT_GROUPS, REDDIT_TIMES } from "@/lib/sources/subreddits";
 import type { SourceInfo } from "@/lib/sources";
 import type { SourceWallpaper } from "@/lib/sources/types";
 import { SourceTabs } from "./SourceTabs";
@@ -33,7 +32,6 @@ const SORTS = [
   { value: "relevant", label: "Most relevant" },
   { value: "new", label: "Newest" },
   { value: "top", label: "Top" },
-  { value: "hot", label: "Hot" },
   { value: "random", label: "Random" },
 ];
 
@@ -57,10 +55,8 @@ export function DiscoverView() {
 
   const isSaved = params.get("view") === "saved";
   const [source, setSource] = useState(params.get("source") || "all");
-  const [category, setCategory] = useState(params.get("category") || "");
   const [orientation, setOrientation] = useState(params.get("orientation") || "any");
   const [sort, setSort] = useState(params.get("sort") || "relevant");
-  const [time, setTime] = useState(params.get("time") || "week");
   const [queryInput, setQueryInput] = useState(params.get("q") || "");
   const [query, setQuery] = useState(params.get("q") || "");
 
@@ -72,23 +68,17 @@ export function DiscoverView() {
   const requestId = useRef(0);
 
   const activeSource = sources.find((s) => s.id === source);
-  const showNsfwToggle = source === "reddit" || source === "wallhaven" || source === "all";
-  const showRedditControls = source === "reddit";
+  const showNsfwToggle = source === "wallhaven" || source === "all";
 
   const fetchPage = useCallback(
     async (pageCursor: string | null, replace: boolean) => {
       const id = ++requestId.current;
       setLoading(true);
       setError(null);
-      const qs = new URLSearchParams({
-        source,
-        nsfw: nsfwEnabled ? "1" : "0",
-      });
+      const qs = new URLSearchParams({ source, nsfw: nsfwEnabled ? "1" : "0" });
       if (query) qs.set("q", query);
-      if (category) qs.set("category", category);
       if (orientation !== "any") qs.set("orientation", orientation);
       if (sort !== "relevant") qs.set("sort", sort);
-      if (showRedditControls) qs.set("time", time);
       if (pageCursor) qs.set("page", pageCursor);
 
       try {
@@ -99,7 +89,7 @@ export function DiscoverView() {
         setItems((prev) => (replace ? data.items : [...prev, ...data.items]));
         setCursor(data.nextPage);
         if (replace && data.items.length === 0 && !data.configured) {
-          setError("This source has no API key configured yet.");
+          setError("This source needs an API key. Add it in the environment.");
         }
       } catch {
         if (id === requestId.current) setError("Could not reach that source. Try again.");
@@ -107,7 +97,7 @@ export function DiscoverView() {
         if (id === requestId.current) setLoading(false);
       }
     },
-    [source, query, category, orientation, sort, time, nsfwEnabled, showRedditControls],
+    [source, query, orientation, sort, nsfwEnabled],
   );
 
   useEffect(() => {
@@ -122,11 +112,11 @@ export function DiscoverView() {
   useEffect(() => {
     if (isSaved) return;
     const handle = window.setTimeout(() => {
-      const qs = buildQuery({ source, q: query, category, orientation, sort, time: showRedditControls ? time : undefined });
+      const qs = buildQuery({ source, q: query, orientation, sort });
       router.replace(qs ? `/discover?${qs}` : "/discover", { scroll: false });
     }, 250);
     return () => window.clearTimeout(handle);
-  }, [source, query, category, orientation, sort, time, showRedditControls, isSaved, router]);
+  }, [source, query, orientation, sort, isSaved, router]);
 
   // infinite scroll
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -144,14 +134,6 @@ export function DiscoverView() {
     return () => observer.disconnect();
   }, [cursor, loading, isSaved, fetchPage]);
 
-  const categoryOptions = useMemo(
-    () => [
-      { value: "", label: "All categories" },
-      ...SUBREDDIT_GROUPS.map((g) => ({ value: g.id, label: g.label })),
-    ],
-    [],
-  );
-
   const savedList = mounted ? savedPhotos : [];
 
   return (
@@ -167,7 +149,7 @@ export function DiscoverView() {
           <p className="mt-3 max-w-lg text-sm text-ink-soft">
             {isSaved
               ? "Photos you saved. They live in this browser only."
-              : "Live results from Unsplash, Pexels, Pixabay, Wallhaven, NASA and Reddit. Every image belongs to its author under that source's licence."}
+              : "Live results from Unsplash, Pexels, Pixabay, Wallhaven and NASA. Every image belongs to its author under that source's licence."}
           </p>
         </div>
         <div className="flex items-center gap-3 font-mono text-sm text-ink-soft">
@@ -180,18 +162,18 @@ export function DiscoverView() {
 
       {isSaved ? (
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link href="/discover" className="focus-tile border border-edge bg-bg-raised px-4 py-2 text-sm text-ink-soft hover:border-edge-strong hover:text-ink">
+          <Link href="/discover" className="btn-ghost focus-tile bg-bg-raised px-4 py-2 text-sm text-ink-soft">
             Back to Discover
           </Link>
           {savedList.length > 0 ? (
-            <button type="button" onClick={clearSavedPhotos} className="focus-tile border border-edge px-4 py-2 text-sm text-ink-faint hover:border-accent hover:text-ink">
+            <button type="button" onClick={clearSavedPhotos} className="btn-ghost focus-tile px-4 py-2 text-sm text-ink-faint">
               Clear saved
             </button>
           ) : null}
         </div>
       ) : (
         <div className="mt-10 space-y-5 border-y border-edge py-6">
-          <SourceTabs sources={sources} active={source} onChange={(id) => { setSource(id); setCategory(""); }} />
+          <SourceTabs sources={sources} active={source} onChange={setSource} />
 
           <form
             onSubmit={(event) => {
@@ -203,7 +185,7 @@ export function DiscoverView() {
             <input
               value={queryInput}
               onChange={(event) => setQueryInput(event.target.value)}
-              placeholder={source === "reddit" ? "Search the selected subreddits" : "Search wallpapers, e.g. mountains, city night"}
+              placeholder="Search wallpapers, e.g. mountains, city night"
               className="focus-tile min-w-0 flex-1 border border-edge bg-bg-raised px-3.5 py-2.5 text-sm text-ink outline-none placeholder:text-ink-faint"
             />
             <button type="submit" className="btn-primary focus-tile clip-tile px-5 py-2.5 text-sm font-medium">
@@ -211,22 +193,16 @@ export function DiscoverView() {
             </button>
           </form>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             <ThemedSelect label="Shape" value={orientation} options={ORIENTATIONS} onChange={setOrientation} />
             <ThemedSelect label="Sort" value={sort} options={SORTS} onChange={setSort} />
-            {showRedditControls ? (
-              <>
-                <ThemedSelect label="Subreddits" value={category} options={categoryOptions} onChange={setCategory} />
-                <ThemedSelect label="Time" value={time} options={REDDIT_TIMES} onChange={setTime} />
-              </>
-            ) : null}
           </div>
 
           {showNsfwToggle ? (
             <div className="flex flex-wrap items-center gap-3">
               <NsfwToggle value={nsfwEnabled} onChange={setNsfwEnabled} />
               <span className="font-mono text-[0.62rem] text-ink-faint">
-                Off by default. Affects Reddit and Wallhaven only.
+                Off by default. Affects Wallhaven only.
               </span>
             </div>
           ) : null}
@@ -260,13 +236,13 @@ export function DiscoverView() {
                 href={`/discover/${photo.source}/${encodeURIComponent(photo.id)}`}
                 className="focus-tile group block"
               >
-                <div className="relative aspect-[4/3] overflow-hidden border border-edge transition-colors group-hover:border-edge-strong" style={{ background: photo.color }}>
+                <div className="tile-hover relative aspect-[4/3] overflow-hidden border border-edge" style={{ background: photo.color }}>
                   <Image src={photo.thumbUrl} alt={photo.title} fill unoptimized sizes="33vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                   <span className="absolute left-2 top-2 border border-white/20 bg-black/45 px-1.5 py-0.5 font-mono text-[0.55rem] uppercase tracking-[0.12em] text-white/85 backdrop-blur">
                     {photo.source}
                   </span>
                 </div>
-                <h3 className="mt-2 truncate text-sm text-ink">{photo.title}</h3>
+                <h3 className="mt-2 truncate text-sm text-ink transition-colors group-hover:text-accent">{photo.title}</h3>
               </Link>
             ))}
           </div>
@@ -309,7 +285,7 @@ export function DiscoverView() {
       )}
 
       <Reveal>
-        <div className="mt-14 sm:mt-20 border border-edge bg-bg-sunken p-8 text-center">
+        <div className="mt-14 border border-edge bg-bg-sunken p-8 text-center sm:mt-20">
           <h2 className="font-display text-2xl text-ink">Want something truly one of a kind?</h2>
           <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
             The Studio draws wallpapers from scratch. No two seeds look the same.

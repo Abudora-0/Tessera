@@ -6,7 +6,6 @@ const SOURCE_LABEL: Record<string, string> = {
   pixabay: "Pixabay",
   wallhaven: "Wallhaven",
   nasa: "NASA",
-  reddit: "Reddit",
 };
 
 /** Author, source and licence, shown on every card and detail page. */

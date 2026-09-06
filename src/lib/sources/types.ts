@@ -9,8 +9,7 @@ export type SourceId =
   | "pexels"
   | "pixabay"
   | "wallhaven"
-  | "nasa"
-  | "reddit";
+  | "nasa";
 
 export type Orientation = "any" | "landscape" | "portrait" | "square";
 
@@ -51,8 +50,6 @@ export type SearchParams = {
   page?: string;
   nsfw?: boolean;
   sort?: string;
-  /** reddit time window: hour, day, week, month, year, all */
-  time?: string;
   perPage?: number;
 };
 

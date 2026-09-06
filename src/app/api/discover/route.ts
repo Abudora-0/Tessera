@@ -18,7 +18,6 @@ export async function GET(request: Request) {
     page: searchParams.get("page") || undefined,
     nsfw: searchParams.get("nsfw") === "1",
     sort: searchParams.get("sort") || undefined,
-    time: searchParams.get("time") || undefined,
   });
 
   return NextResponse.json(

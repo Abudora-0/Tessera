@@ -1,7 +1,6 @@
 import { nasa } from "./nasa";
 import { pexels } from "./pexels";
 import { pixabay } from "./pixabay";
-import { reddit } from "./reddit";
 import { unsplash } from "./unsplash";
 import { wallhaven } from "./wallhaven";
 import {
@@ -18,7 +17,6 @@ export const SOURCES: SourceAdapter[] = [
   pixabay,
   wallhaven,
   nasa,
-  reddit,
 ];
 
 export const SOURCE_MAP: Record<SourceId, SourceAdapter> = Object.fromEntries(
