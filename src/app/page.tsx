@@ -31,7 +31,7 @@ const FEATURES = [
   "Exports render off screen at native resolution, up to 8192 pixels on the long edge",
   "A command palette on Cmd or Ctrl K to jump anywhere or roll a surprise",
   "A local shelf keeps your favourites in the browser with no account",
-  "Themed controls throughout, down to the scrollbar, the counters and the cursor",
+  "Themed controls throughout, down to the scrollbar, the counters and the dropdowns",
   "Respects reduced motion and ships as a fast static site",
 ];
 

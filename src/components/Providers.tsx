@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { useStore } from "@/store/useStore";
 import { CommandPalette } from "./CommandPalette";
-import { TileCursor } from "./TileCursor";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const theme = useStore((state) => state.theme);
@@ -22,7 +21,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <>
       <div className="grain-film" aria-hidden />
       {children}
-      <TileCursor />
       <CommandPalette />
     </>
   );

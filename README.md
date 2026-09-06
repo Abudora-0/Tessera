@@ -67,8 +67,8 @@ backend involved.
 - **Command palette.** Press <kbd>Cmd</kbd> or <kbd>Ctrl</kbd> + <kbd>K</kbd> to
   jump anywhere or roll a surprise.
 - **A local shelf.** Save favourites to the browser with no account.
-- **Themed to the last pixel.** Custom scrollbar, animated logo, tile cursor,
-  count up stats, custom dropdowns and sliders, all part of the same object.
+- **Themed to the last pixel.** Custom scrollbar, animated logo, count up stats,
+  custom dropdowns and sliders, all part of the same object.
 - **Keyboard first in the Studio.** <kbd>R</kbd> rolls the seed, <kbd>Shift</kbd> +
   <kbd>R</kbd> rolls everything, <kbd>F</kbd> cycles the family, <kbd>D</kbd>
   downloads.
