@@ -1,24 +1,25 @@
 /**
- * Reddit application only OAuth (client credentials). The token is cached in
- * module scope; on Vercel Fluid Compute the instance is reused across requests
- * so this avoids re-authenticating on every call.
+ * Reddit access. If REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET are set we use
+ * application only OAuth (higher rate limits, token cached in module scope so
+ * Vercel Fluid Compute reuses it). Otherwise we fall back to the public
+ * www.reddit.com JSON endpoints, which need no app but are rate limited harder.
  */
 
 let cached: { token: string; expires: number } | null = null;
 
-export function redditConfigured(): boolean {
+export function redditHasApp(): boolean {
   return Boolean(process.env.REDDIT_CLIENT_ID && process.env.REDDIT_CLIENT_SECRET);
 }
 
 export function redditUserAgent(): string {
   return (
     process.env.REDDIT_USER_AGENT ||
-    "web:tessera-wallpapers:v1.0 (by /u/tessera-app)"
+    "web:tesseera:v1.0 (by /u/tesseera-app)"
   );
 }
 
-export async function redditToken(): Promise<string | null> {
-  if (!redditConfigured()) return null;
+async function redditToken(): Promise<string | null> {
+  if (!redditHasApp()) return null;
   if (cached && cached.expires > Date.now() + 30_000) return cached.token;
 
   const basic = Buffer.from(
@@ -47,19 +48,39 @@ export async function redditToken(): Promise<string | null> {
   return cached.token;
 }
 
+/** Insert `.json` before the query string for the public endpoint. */
+function toPublicPath(path: string): string {
+  const [base, query] = path.split("?");
+  const withJson = base.endsWith(".json") ? base : `${base}.json`;
+  return query ? `${withJson}?${query}` : withJson;
+}
+
 export async function redditFetch<T>(
   path: string,
   revalidate = 300,
 ): Promise<T | null> {
   const token = await redditToken();
-  if (!token) return null;
-  const res = await fetch(`https://oauth.reddit.com${path}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "User-Agent": redditUserAgent(),
-    },
+
+  const url = token
+    ? `https://oauth.reddit.com${path}`
+    : `https://www.reddit.com${toPublicPath(path)}`;
+
+  const res = await fetch(url, {
+    headers: token
+      ? { Authorization: `Bearer ${token}`, "User-Agent": redditUserAgent() }
+      : {
+          // the public JSON API rejects requests that do not look like a client
+          "User-Agent": redditUserAgent(),
+          Accept: "application/json, text/plain, */*",
+          "Accept-Language": "en-US,en;q=0.9",
+        },
     next: { revalidate },
   });
   if (!res.ok) return null;
-  return (await res.json()) as T;
+  const text = await res.text();
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    return null;
+  }
 }

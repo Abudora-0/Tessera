@@ -109,9 +109,9 @@ and Unsplash's download ping is honoured.
 | Unsplash | Unsplash License | `UNSPLASH_ACCESS_KEY` |
 | Pexels | Pexels License | `PEXELS_API_KEY` |
 | Pixabay | Pixabay Content License | `PIXABAY_API_KEY` |
-| Wallhaven | Uploader owned | `WALLHAVEN_API_KEY` (optional, SFW works without) |
+| Wallhaven | Uploader owned | none for SFW, `WALLHAVEN_API_KEY` for mature |
 | NASA | Public domain | none |
-| Reddit | Rights retained by original creators | `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, `REDDIT_USER_AGENT` |
+| Reddit | Rights retained by original creators | none, or `REDDIT_CLIENT_ID` + `REDDIT_CLIENT_SECRET` + `REDDIT_USER_AGENT` to raise limits |
 
 Copy `.env.example` to `.env.local` and add the keys you have. Any source without
 a key is simply disabled in the UI; the rest of the site is unaffected. Mature
@@ -212,9 +212,10 @@ Live at [tesseera.vercel.app](https://tesseera.vercel.app).
 Tessera runs on Vercel with no configuration. Import the repo at
 [vercel.com/new](https://vercel.com/new) and accept the defaults, or use the one
 click button at the top of this file. The generative Studio and Gallery work
-immediately; the Discover section needs the API keys from `.env.example` added as
-project environment variables (Settings, Environment Variables) before its
-Unsplash, Pexels, Pixabay and Reddit tabs light up.
+immediately, and Discover already works for NASA, Wallhaven and Reddit. Add the
+`UNSPLASH_ACCESS_KEY`, `PEXELS_API_KEY` and `PIXABAY_API_KEY` values from
+`.env.example` as project environment variables (Settings, Environment Variables)
+to enable those three tabs too.
 
 ## Topics
 

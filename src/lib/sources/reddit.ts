@@ -1,5 +1,5 @@
 import { originalOnly } from "./shared";
-import { redditConfigured, redditFetch } from "./reddit-auth";
+import { redditFetch } from "./reddit-auth";
 import { subsForCategory } from "./subreddits";
 import {
   orientationOf,
@@ -125,11 +125,11 @@ export const reddit: SourceAdapter = {
     url: "https://www.redditinc.com/policies/user-agreement",
   },
   canBeNsfw: true,
-  envKeys: ["REDDIT_CLIENT_ID", "REDDIT_CLIENT_SECRET"],
-  isConfigured: redditConfigured,
+  // works without an app via the public JSON API; the env vars just raise limits
+  envKeys: [],
+  isConfigured: () => true,
 
   async search(params: SearchParams): Promise<SearchResult> {
-    if (!redditConfigured()) return { items: [], nextPage: null, configured: false };
     const subs = subsForCategory(params.category).join("+");
     const after = params.page || "";
     const sort = ["hot", "top", "new", "rising"].includes(params.sort || "") ? params.sort : "hot";
@@ -153,7 +153,6 @@ export const reddit: SourceAdapter = {
   },
 
   async getItem(id: string): Promise<SourceWallpaper | null> {
-    if (!redditConfigured()) return null;
     const listing = await redditFetch<Listing>(`/api/info?id=t3_${id}&raw_json=1`, 600);
     const post = listing?.data.children[0]?.data;
     return post ? normalize(post) : null;
