@@ -24,11 +24,16 @@ export function SiteHeader() {
   const favCount = mounted ? favorites.length : 0;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  // a live backdrop-filter on a sticky full width bar repaints the blur every
+  // scroll frame; on touch devices that is a real cost, so fall back to a solid
+  // fill there
+  const [blurOk, setBlurOk] = useState(true);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     const raf = requestAnimationFrame(onScroll);
     window.addEventListener("scroll", onScroll, { passive: true });
+    setBlurOk(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
@@ -47,8 +52,10 @@ export function SiteHeader() {
       className="sticky top-0 z-50 border-b transition-colors duration-300"
       style={{
         borderColor: scrolled ? "var(--edge)" : "transparent",
-        background: scrolled ? "color-mix(in srgb, var(--bg) 82%, transparent)" : "transparent",
-        backdropFilter: scrolled ? "blur(10px)" : "none",
+        background: scrolled
+          ? `color-mix(in srgb, var(--bg) ${blurOk ? 82 : 96}%, transparent)`
+          : "transparent",
+        backdropFilter: scrolled && blurOk ? "blur(10px)" : "none",
       }}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">

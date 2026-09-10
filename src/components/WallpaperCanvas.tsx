@@ -18,6 +18,20 @@ type Props = {
 /** Render above display resolution so the browser downsamples for free anti aliasing. */
 const SUPERSAMPLE = 1.5;
 
+/**
+ * Phones and low core machines choke on the full supersampled render, especially
+ * when a grid paints a dozen at once. Dial the quality back for them: the tiles
+ * are small on those screens anyway.
+ */
+function qualityProfile() {
+  if (typeof navigator === "undefined") return { supersample: SUPERSAMPLE, cap: 1 };
+  const cores = navigator.hardwareConcurrency ?? 8;
+  const mem = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8;
+  const small = typeof window !== "undefined" && window.innerWidth < 700;
+  if (small || cores <= 4 || mem <= 4) return { supersample: 1.15, cap: 0.45 };
+  return { supersample: SUPERSAMPLE, cap: 1 };
+}
+
 export function WallpaperCanvas({
   config,
   ratio = 16 / 9,
@@ -65,12 +79,14 @@ export function WallpaperCanvas({
         return;
       }
       const width = Math.max(rect.width, 2);
-      const dpr = Math.min(window.devicePixelRatio || 1, 2) * SUPERSAMPLE;
+      const { supersample, cap } = qualityProfile();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2) * supersample;
       let w = Math.round(width * dpr);
       let h = Math.round((width / ratio) * dpr);
+      const budget = maxPixels * cap;
       const pixels = w * h;
-      if (pixels > maxPixels) {
-        const factor = Math.sqrt(maxPixels / pixels);
+      if (pixels > budget) {
+        const factor = Math.sqrt(budget / pixels);
         w = Math.round(w * factor);
         h = Math.round(h * factor);
       }

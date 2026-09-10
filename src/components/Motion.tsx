@@ -4,11 +4,15 @@ import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import { useRef, useState } from "react";
 
-/** Fade and rise into view once, staggered by an optional delay. */
+/**
+ * A gentle rise into view. Only translates, never fades: if the animation frame
+ * is paused (backgrounded tab, heavy main thread) the worst case is a section
+ * sitting a few pixels low, never content stuck invisible.
+ */
 export function Reveal({
   children,
   delay = 0,
-  y = 22,
+  y = 18,
   className,
 }: {
   children: ReactNode;
@@ -17,13 +21,18 @@ export function Reveal({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+
+  if (reduce) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}
-      initial={reduce ? { opacity: 0 } : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
-      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+      initial={{ y }}
+      whileInView={{ y: 0 }}
+      viewport={{ once: true, margin: "-8%" }}
+      transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>

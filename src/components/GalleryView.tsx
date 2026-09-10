@@ -152,7 +152,7 @@ export function GalleryView() {
           </Link>
         </div>
       ) : (
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((collection, index) => (
             <WallpaperCard key={collection.slug} collection={collection} index={index} />
           ))}

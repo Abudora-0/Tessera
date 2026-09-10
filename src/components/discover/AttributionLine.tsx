@@ -22,8 +22,8 @@ export function AttributionLine({
     return (
       <p className="flex items-center gap-1.5 truncate font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ink-faint">
         <span className="inline-block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent/70" />
-        <span className="truncate">{item.author.name}</span>
-        <span className="text-ink-faint/60">/</span>
+        <span className="min-w-0 truncate">{item.author.name}</span>
+        <span className="shrink-0 text-ink-faint/60">/</span>
         <span className="shrink-0">{sourceName}</span>
       </p>
     );

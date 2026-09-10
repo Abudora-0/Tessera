@@ -58,9 +58,14 @@ export function HeroCanvas({ seedConfig }: { seedConfig: WallpaperConfig }) {
     renderToCanvas(b, makeConfig(), w, h);
 
     if (reduce) return;
+    // one still piece is plenty on a phone; the rotating render is a heavy
+    // recurring cost for a background element
+    const lite = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    if (lite) return;
 
     let current: "a" | "b" = "a";
     const interval = window.setInterval(() => {
+      if (document.hidden) return;
       const next = current === "a" ? "b" : "a";
       const target = next === "a" ? a : b;
       const { w: nw, h: nh } = size();
@@ -76,14 +81,23 @@ export function HeroCanvas({ seedConfig }: { seedConfig: WallpaperConfig }) {
     if (reduce) return;
     const wrap = wrapRef.current;
     if (!wrap) return;
+    if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) return;
+    let frame = 0;
     const onMove = (event: PointerEvent) => {
-      const x = (event.clientX / window.innerWidth - 0.5) * 14;
-      const y = (event.clientY / window.innerHeight - 0.5) * 14;
-      wrap.style.setProperty("--px", `${x}px`);
-      wrap.style.setProperty("--py", `${y}px`);
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        const x = (event.clientX / window.innerWidth - 0.5) * 14;
+        const y = (event.clientY / window.innerHeight - 0.5) * 14;
+        wrap.style.setProperty("--px", `${x}px`);
+        wrap.style.setProperty("--py", `${y}px`);
+      });
     };
-    window.addEventListener("pointermove", onMove);
-    return () => window.removeEventListener("pointermove", onMove);
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, [reduce]);
 
   return (

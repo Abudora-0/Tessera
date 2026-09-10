@@ -15,10 +15,11 @@ export function PhotoCard({ item, index = 0 }: { item: SourceWallpaper; index?: 
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.25), ease: [0.16, 1, 0.3, 1] }}
-      className="group relative"
+      initial={{ y: 14 }}
+      whileInView={{ y: 0 }}
+      viewport={{ once: true, margin: "-4%" }}
+      transition={{ duration: 0.45, delay: Math.min(index * 0.02, 0.16), ease: [0.16, 1, 0.3, 1] }}
+      className="group relative min-w-0"
     >
       <Link
         href={`/discover/${item.source}/${encodeURIComponent(item.id)}`}

@@ -127,7 +127,7 @@ export default async function WallpaperPage({ params }: PageProps<"/wallpaper/[s
             {known ? "In the same vein" : "From the gallery"}
           </h2>
         </Reveal>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {related.map((item, index) => (
             <WallpaperCard key={item.slug} collection={item} index={index} ratio={4 / 3} />
           ))}

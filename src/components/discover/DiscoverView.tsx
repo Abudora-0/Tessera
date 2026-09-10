@@ -229,7 +229,7 @@ export function DiscoverView() {
             ctaLabel="Open Discover"
           />
         ) : (
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {savedList.map((photo) => (
               <Link
                 key={`${photo.source}-${photo.id}`}
@@ -259,7 +259,7 @@ export function DiscoverView() {
           ) : null}
 
           {items.length > 0 ? (
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {items.map((item, index) => (
                 <PhotoCard key={`${item.source}-${item.id}-${index}`} item={item} index={index} />
               ))}
@@ -267,7 +267,7 @@ export function DiscoverView() {
           ) : null}
 
           {loading ? (
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="aspect-[4/3] border border-edge shimmer opacity-30" />
               ))}
